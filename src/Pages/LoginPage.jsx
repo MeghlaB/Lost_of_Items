@@ -1,7 +1,8 @@
 import React from 'react'
 import loginAnimation from '../../public/login.json'
 import Lottie from 'lottie-react';
-
+import { NavLink } from 'react-router-dom';
+import { FaGoogle } from "react-icons/fa";
 
 export default function LoginPage() {
     const handleLogin = e => {
@@ -39,8 +40,19 @@ export default function LoginPage() {
                             </label>
                         </div>
                         <div className="form-control mt-6">
-                            <button className="btn btn-primary">Register</button>
+                            <button className="btn btn-primary">Login</button>
                         </div>
+                        <p>Don't Have An Account ?<span>
+                            <NavLink
+                         to={'/register'} className='text-blue-700 underline'>SignUp</NavLink></span></p>
+                         
+                <div className="mt-3 space-y-3 sm:space-y-5">
+                    <hr className="border-zinc-700" />
+                    <button className="mx-auto mb-4 mt-8 items-center rounded-md border px-5 py-2 shadow-lg duration-200 hover:bg-zinc-400/10 dark:border-zinc-700 flex dark:hover:bg-zinc-700 dark:hover:text-white">
+                        <FaGoogle className='mr-4 text-xl'></FaGoogle>
+                        Continue with Google
+                    </button>
+                </div>
                     </form>
                 </div>
             </div>

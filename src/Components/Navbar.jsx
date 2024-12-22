@@ -10,6 +10,7 @@ import { FiMoon } from 'react-icons/fi'
 
 export default function Navbar() {
     const { togglebtn, theme } = useContext(ThemeContext)
+    
 
     return (
         <div className="navbar bg-base-300 ">
@@ -54,13 +55,12 @@ export default function Navbar() {
                 <div>
                     <button
                         onClick={togglebtn}
-                        className={`px-4 py-2 text-sm font-bold transition duration-300 rounded-md shadow ${theme === "light" ? "text-black hover:bg-gray-200" : "text-gray-950 font-bold hover:bg-gray-800 hover:text-white"
+                        className={`px-4 py-2 text-sm font-bold transition duration-300 rounded-md shadow ${theme === "light" ? "text-black hover:bg-gray-200" : " font-bold hover:bg-gray-800 hover:text-white"
                             }`}
                     >
                         {theme === "light" ? <MdSunny /> : <FiMoon />}
                     </button>
                 </div>
-                <Link to={'/register'} >Register</Link>
                 <Link to={'/login'}>Login</Link>
             </div>
         </div>
