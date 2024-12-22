@@ -19,12 +19,3 @@ appId:import.meta.env.VITE_appId
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 export default auth
-
-
-
- //   apikey: "AIzaSyDuSicLOETZxX4uq0H8k8FEdY428l9EHNc",
-//   authDomain:"assingment11lostfound.firebaseapp.com",
-//   projectId:"assingment11lostfound",
-//   storageBucket:"assingment11lostfound.firebasestorage.app",
-//   messagingSenderId:"430257779366",
-//   appId:"1:430257779366:web:553aadf296acbc449c7a67"

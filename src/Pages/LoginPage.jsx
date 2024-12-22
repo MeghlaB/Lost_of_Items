@@ -1,16 +1,69 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import loginAnimation from '../../public/login.json'
 import Lottie from 'lottie-react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaGoogle } from "react-icons/fa";
+import { AuthContext } from '../AuthProvider/AuthProvider';
+import Swal from 'sweetalert2';
 
 export default function LoginPage() {
-    const handleLogin = e => {
+    const { loginuser, setUser, user, UpdateProfile, GoogleLogin , setLoading } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const [error, setError] = useState('')
+    const [showpassword, setShowPassword] = useState(false)
+    const handeleLogin = e => {
         e.preventDefault()
-        const form = e.target;
-        const name = form.name.value;
-        const password = form.password.value
-        console.log(name, email, photUrl, password)
+        setError('')
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        loginuser(email, password)
+            .then((result) => {
+                setUser(result.user)
+                if (result.user) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Log in successful!',
+                        icon: 'success',
+                        confirmButtonText: 'Done'
+                    })
+                    setTimeout(() => {
+                        navigate(location?.state ? location.state : '/')
+                    }, 1000)
+                }
+
+            })
+            .catch((err) => {
+                setUser(err.message)
+                Swal.fire({
+                    title: 'Error!',
+                    text: `Log out :${err}`,
+                    icon: 'error',
+                    confirmButtonText: 'Done'
+                })
+            })
+    }
+
+    // google login
+    const handleGoogle = () => {
+        GoogleLogin()
+            .then((result) => {
+                setUser(result.user)
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Registration successful!',
+                    icon: 'success',
+                    confirmButtonText: 'Done'
+                })
+                if (result.user) {
+                    setTimeout(() => {
+                        navigate(location?.state ? location.state : '/')
+                    }, 1000)
+                }
+            })
+            .catch((err) => {
+                setUser(err.message)
+            })
+
     }
 
     return (
@@ -20,8 +73,8 @@ export default function LoginPage() {
                     <Lottie animationData={loginAnimation}></Lottie>
                 </div>
                 <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                    <h1 className="text-5xl font-bold mx-auto mt-2">Register now!</h1>
-                    <form onSubmit={handleLogin} className="card-body">
+                    <h1 className="text-5xl font-bold mx-auto mt-2">Login now!</h1>
+                    <form onSubmit={handeleLogin} className="card-body">
                         {/* email Address */}
                         <div className="form-control">
                             <label className="label">
@@ -44,15 +97,17 @@ export default function LoginPage() {
                         </div>
                         <p>Don't Have An Account ?<span>
                             <NavLink
-                         to={'/register'} className='text-blue-700 underline'>SignUp</NavLink></span></p>
-                         
-                <div className="mt-3 space-y-3 sm:space-y-5">
-                    <hr className="border-zinc-700" />
-                    <button className="mx-auto mb-4 mt-8 items-center rounded-md border px-5 py-2 shadow-lg duration-200 hover:bg-zinc-400/10 dark:border-zinc-700 flex dark:hover:bg-zinc-700 dark:hover:text-white">
-                        <FaGoogle className='mr-4 text-xl'></FaGoogle>
-                        Continue with Google
-                    </button>
-                </div>
+                                to={'/register'} className='text-blue-700 underline'>SignUp</NavLink></span></p>
+
+                        <div className="mt-3 space-y-3 sm:space-y-5">
+                            <hr className="border-zinc-700" />
+                            <Link
+                                onClick={handleGoogle}
+                                className="mx-auto mb-4 mt-8 items-center rounded-md border px-5 py-2 shadow-lg duration-200 hover:bg-zinc-400/10 dark:border-zinc-700 flex dark:hover:bg-zinc-700 dark:hover:text-white">
+                                <FaGoogle className='mr-4 text-xl'></FaGoogle>
+                                Continue with Google
+                            </Link>
+                        </div>
                     </form>
                 </div>
             </div>

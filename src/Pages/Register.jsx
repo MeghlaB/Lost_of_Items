@@ -122,14 +122,6 @@ export default function Register() {
                             <NavLink
 
                                 to={'/login'} className='text-blue-700 underline'>SignIn</NavLink></span></p>
-
-                        <div className="mt-3 space-y-3 sm:space-y-5">
-                            <hr className="border-zinc-700" />
-                            <button className="mx-auto mb-4 mt-8 items-center rounded-md border px-5 py-2 shadow-lg duration-200 hover:bg-zinc-400/10 dark:border-zinc-700 flex dark:hover:bg-zinc-700 dark:hover:text-white">
-                                <FaGoogle className='mr-4 text-xl'></FaGoogle>
-                                Continue with Google
-                            </button>
-                        </div>
                     </form>
                 </div>
             </div>
