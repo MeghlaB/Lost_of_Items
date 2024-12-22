@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import logo from '../assets/logo.png'
 import { AuthContext } from '../AuthProvider/AuthProvider'
@@ -10,7 +10,13 @@ import { FiMoon } from 'react-icons/fi'
 
 export default function Navbar() {
     const { togglebtn, theme } = useContext(ThemeContext)
+    const { user, logout } = useContext(AuthContext)
+
+    const [isMenuOpen , setMenuOpen] = useState(false)
     
+    const toggleMenu= ()=>{
+        setMenuOpen(!isMenuOpen)
+    }
 
     return (
         <div className="navbar bg-base-300 ">
@@ -61,7 +67,43 @@ export default function Navbar() {
                         {theme === "light" ? <MdSunny /> : <FiMoon />}
                     </button>
                 </div>
-                <Link to={'/login'}>Login</Link>
+                {user ? (
+                    // Logged-in User Menu
+                    <div className="relative">
+                        <img
+                            src={user.photoURL}
+                            alt="Profile"
+                            className="w-8 h-8 rounded-full cursor-pointer"
+                            onClick={toggleMenu} 
+                        />
+                        {isMenuOpen && (
+                            <div className="absolute right-0 mt-2 w-52 mx-auto bg-white text-black p-2 rounded shadow z-50">
+                                <p className="mb-2">{user.displayName}</p>
+                                <NavLink to="/addItems" className="block hover:text-blue-600 mb-2">
+                                    Add Lost & Found Item
+                                </NavLink>
+                                <NavLink to="/allRecovered" className="block hover:text-blue-600 mb-2">
+                                    All Recovered Items
+                                </NavLink>
+                                <NavLink to="/myItems" className="block hover:text-blue-600 mb-2">
+                                    Manage My Items
+                                </NavLink>
+                                <button
+                                    onClick={logout}
+                                    className="bg-red-500 text-white p-2 rounded hover:bg-red-600"
+                                >
+                                    Logout
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    // Login Button
+                    <NavLink to="/login" className="hover:text-gray-200">
+                        Login
+                    </NavLink>
+                )}
+               
             </div>
         </div>
     )
