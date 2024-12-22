@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import logo from '../assets/logo.png'
+import { AuthContext } from '../AuthProvider/AuthProvider'
 
 
 
 export default function Navbar() {
+    const{name} = useContext(AuthContext)
+
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-gray-800 text-white">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
