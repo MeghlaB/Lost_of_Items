@@ -3,6 +3,8 @@ import Banner from './Banner'
 
 export default function Home() {
     return (
-        <Banner></Banner>
+        <div>
+            <Banner></Banner>
+        </div>
     )
 }
