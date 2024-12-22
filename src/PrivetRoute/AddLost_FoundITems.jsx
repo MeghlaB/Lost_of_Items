@@ -1,11 +1,15 @@
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../AuthProvider/AuthProvider';
-import DatePicker from 'react-datepicker';
-import { toast } from 'react-toastify';
+import { useContext, useState } from "react";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import axios from "axios";
+import { toast } from "react-toastify";
+import DatePicker from "react-datepicker";
+import Swal from "sweetalert2";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function AddLost_FoundITems() {
 
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext
+  );
   const [formData, setFormData] = useState({
     postType: "Lost",
     thumbnail: null,
@@ -31,14 +35,6 @@ export default function AddLost_FoundITems() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validate required fields
-    if (!formData.title || !formData.description || !formData.category || !formData.location) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
-
-    // Prepare data for submission
     const postData = {
       ...formData,
       dateLost: formData.dateLost.toISOString(),
@@ -49,20 +45,22 @@ export default function AddLost_FoundITems() {
     };
 
     try {
-      // Assume API call for posting
-      toast.success("Post added successfully!");
-      setFormData({
-        postType: "Lost",
-        thumbnail: null,
-        title: "",
-        description: "",
-        category: "",
-        location: "",
-        dateLost: new Date(),
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/addItem`, postData);
+      console.log(res.data);  
+      Swal.fire({
+        title: 'Success!',
+        text: 'Post added successfully!',
+        icon: 'success',
+        confirmButtonText: 'Done'
       });
     } catch (error) {
       console.error("Error adding document: ", error);
-      toast.error("Failed to add post. Please try again.");
+      Swal.fire({
+        title: 'Failed!',
+        text: 'Post added Failed!',
+        icon: 'error',
+        confirmButtonText: 'Done'
+      });
     }
   };
 
@@ -85,7 +83,7 @@ export default function AddLost_FoundITems() {
         {/* Thumbnail */}
         <label className="block mb-2 font-medium">Thumbnail (Image Upload)</label>
         <input
-          type="file"
+          type="url"
           onChange={handleFileChange}
           className="file-input file-input-bordered w-full mb-4"
         />
@@ -120,7 +118,7 @@ export default function AddLost_FoundITems() {
           name="category"
           value={formData.category}
           onChange={handleInputChange}
-          placeholder="e.g., pets, documents, gadgets"
+          placeholder="e.g.. pets.. documents.. gadgets"
           className="input input-bordered w-full mb-4"
           required
         />
@@ -138,7 +136,7 @@ export default function AddLost_FoundITems() {
         />
 
         {/* Date Lost */}
-        <label className="block mb-2 font-medium">Date Lost/Found</label>
+        <label className="block mb-2 font-medium ">Date Lost/Found</label>
         <DatePicker
           selected={formData.dateLost}
           onChange={handleDateChange}
