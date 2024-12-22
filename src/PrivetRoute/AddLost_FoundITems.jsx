@@ -1,18 +1,16 @@
+// 
 import { useContext, useState } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import axios from "axios";
-import { toast } from "react-toastify";
-import DatePicker from "react-datepicker";
 import Swal from "sweetalert2";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function AddLost_FoundITems() {
-
-  const { user } = useContext(AuthContext
-  );
+  const { user } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     postType: "Lost",
-    thumbnail: null,
+    thumbnail: "", // URL হিসেবে ধরে নেওয়া
     title: "",
     description: "",
     category: "",
@@ -20,46 +18,49 @@ export default function AddLost_FoundITems() {
     dateLost: new Date(),
   });
 
+  // ইনপুট চেঞ্জ হ্যান্ডলার
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, thumbnail: e.target.files[0] });
-  };
-
+  // তারিখ চেঞ্জ হ্যান্ডলার
   const handleDateChange = (date) => {
     setFormData({ ...formData, dateLost: date });
   };
 
+  // সাবমিট হ্যান্ডলার
   const handleSubmit = async (e) => {
     e.preventDefault();
     const postData = {
       ...formData,
       dateLost: formData.dateLost.toISOString(),
       user: {
-        displayName: user.displayName,
-        email: user.email,
+        displayName: user?.displayName,
+        email: user?.email,
       },
     };
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/addItem`, postData);
-      console.log(res.data);  
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/addItem`,
+        postData
+      );
+      console.log(res.data);
+
       Swal.fire({
-        title: 'Success!',
-        text: 'Post added successfully!',
-        icon: 'success',
-        confirmButtonText: 'Done'
+        title: "Success!",
+        text: "Post added successfully!",
+        icon: "success",
+        confirmButtonText: "Done",
       });
     } catch (error) {
       console.error("Error adding document: ", error);
       Swal.fire({
-        title: 'Failed!',
-        text: 'Post added Failed!',
-        icon: 'error',
-        confirmButtonText: 'Done'
+        title: "Failed!",
+        text: "Post addition failed. Please try again!",
+        icon: "error",
+        confirmButtonText: "Try Again",
       });
     }
   };
@@ -80,12 +81,16 @@ export default function AddLost_FoundITems() {
           <option value="Found">Found</option>
         </select>
 
-        {/* Thumbnail */}
-        <label className="block mb-2 font-medium">Thumbnail (Image Upload)</label>
+        {/* Thumbnail URL */}
+        <label className="block mb-2 font-medium">Thumbnail (Image URL)</label>
         <input
           type="url"
-          onChange={handleFileChange}
-          className="file-input file-input-bordered w-full mb-4"
+          name="thumbnail"
+          value={formData.thumbnail}
+          onChange={handleInputChange}
+          placeholder="Enter image URL"
+          className="input input-bordered w-full mb-4"
+          required
         />
 
         {/* Title */}
@@ -136,7 +141,7 @@ export default function AddLost_FoundITems() {
         />
 
         {/* Date Lost */}
-        <label className="block mb-2 font-medium ">Date Lost/Found</label>
+        <label className="block mb-2 font-medium">Date Lost/Found</label>
         <DatePicker
           selected={formData.dateLost}
           onChange={handleDateChange}

@@ -1,6 +1,6 @@
 
 import { Navigate, useLocation } from 'react-router-dom'
-import { AuthContext } from '../AddProvider/AuthProvider'
+import { AuthContext } from '../AuthProvider/AuthProvider'
 
 
 export default function PrivetRoute({children}) {

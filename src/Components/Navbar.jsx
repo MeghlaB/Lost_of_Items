@@ -44,8 +44,7 @@ export default function Navbar() {
             <div className="navbar-center hidden  lg:flex">
                 <ul className="menu menu-horizontal px-1 text-[18px] font-bold  gap-4">
                     <NavLink to={'/'}>Home</NavLink>
-                    <NavLink>Lost & Found Items Page</NavLink>
-                    <NavLink></NavLink>
+                    <NavLink to={'/allItems'}>Lost & Found Items Page</NavLink>
                     <NavLink></NavLink>
 
                 </ul>
