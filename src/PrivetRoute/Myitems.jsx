@@ -3,6 +3,7 @@ import { AuthContext } from '../AuthProvider/AuthProvider'
 import { useState } from 'react'
 import axios from 'axios'
 import { Link, useParams } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 export default function Myitems() {
   const {id} = useParams()
@@ -17,6 +18,61 @@ export default function Myitems() {
         setPostItmes(res.data)
       })
   }, [])
+
+// delate post item
+const handleDelete= async (_id)=>{
+  Swal.fire({
+    title: "Are you sure?",
+    text: "Your Lost Or Found Items!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!"
+  }).then(async(result) => {
+    if (result.isConfirmed) {
+      console.log(_id)
+     try{
+      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/items/${_id}`)
+     
+      if (res.status === 200) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your post has been deleted.",
+          icon: "success",
+        });
+
+        const updatepost = postsItems.filter(post=>post._id !== _id)
+        setPostItmes(updatepost)
+
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to delete the post.",
+          icon: "error",
+        });
+      }
+    } 
+    catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: error.res?.data?.message || "An unexpected error occurred.",
+        icon: "error",
+      });
+      console.error("Error deleting item:", error);
+    }
+  }
+      
+})
+
+
+
+}
+
+
+
+
+
 
   return (
     <div>
