@@ -16,6 +16,7 @@ import Myitems from "../PrivetRoute/Myitems";
 import UpdatePost from "../PrivetRoute/UpdatePost";
 import DelatePost from "../PrivetRoute/DelatePost";
 import Allrecovery from "../PrivetRoute/Allrecovery";
+import ErrorPage from "../Pages/ErrorPage";
 
 
   
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
     {
       path:'/',
       element:<Layout></Layout>,
+      errorElement:<ErrorPage></ErrorPage>,
       children:[
         {
             path:'/',
