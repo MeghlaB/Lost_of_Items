@@ -44,15 +44,15 @@ const router = createBrowserRouter([
         },
         {
           path:'/addItems',
-          element:<AddLost_FoundITems></AddLost_FoundITems>
+          element:<PrivetRoute><AddLost_FoundITems></AddLost_FoundITems></PrivetRoute>
         },
         {
           path:'/myItems',
-          element:<Myitems></Myitems>
+          element:<PrivetRoute><Myitems></Myitems></PrivetRoute>
         },
         {
           path:'/updatePost/:id',
-          element:<UpdatePost></UpdatePost>,
+          element:<PrivetRoute><UpdatePost></UpdatePost></PrivetRoute>,
           loader:({params})=>fetch(`${import.meta.env.VITE_API_URL}/items/${params.id}`)
 
         },

@@ -8,8 +8,8 @@ export default function Datepicker() {
     <div>
       <DatePicker
       showIcon
-      selected={startDate}  // Correctly use selected for the value of the date
-      onChange={(date) => setStartDate(date)}  // Handle date change
+      selected={startDate}  
+      onChange={(date) => setStartDate(date)}  
       icon={
         <svg
           xmlns="http://www.w3.org/2000/svg"

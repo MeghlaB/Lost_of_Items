@@ -16,12 +16,14 @@ console.log(updateData)
   console.log(_id)
 
   const [formData, setFormData] = useState({
-    postType: type || "Lost", // Initialize with existing data
+    postType: type || "Lost", 
     thumbnail: thumbnail || "",
     title: title || "",
     description: description || "",
     category: category || "",
     location: location || "",
+    userName: user?.displayName || "", 
+    userEmail: user?.email || "", 
     dateLost: dateLost ? new Date(dateLost) : new Date(),
   });
 
@@ -156,6 +158,25 @@ console.log(updateData)
           onChange={handleDateChange}
           className="input input-bordered w-full mb-4"
         />
+ {/* User Email (Read Only) */}
+ <label className="block mb-2 font-medium">User Email</label>
+    <input
+      type="email"
+      name="userEmail"
+      value={formData.userEmail} // Assuming this is coming from state or props
+      className="input input-bordered w-full mb-4"
+      readOnly
+    />
+
+    {/* User Name (Read Only) */}
+    <label className="block mb-2 font-medium">User Name</label>
+    <input
+      type="text"
+      name="userName"
+      value={formData.userName} // Assuming this is coming from state or props
+      className="input input-bordered w-full mb-4"
+      readOnly
+    />
 
         {/* Add Post Button */}
         <button type="submit" className="btn btn-primary w-full">

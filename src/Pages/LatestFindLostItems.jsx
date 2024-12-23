@@ -13,8 +13,9 @@ const LatestFindLostItems = () => {
                 setItems(res.data)
             })
     }, [])
+    const sortedItems = items.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 6);
 
-    const filteredItems = items.filter(
+    const filteredItems = sortedItems.filter(
         item =>
             item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             item.location.toLowerCase().includes(searchQuery.toLowerCase())

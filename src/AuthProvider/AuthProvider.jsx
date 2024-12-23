@@ -1,51 +1,79 @@
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth'
 import React, { createContext, useEffect, useState } from 'react'
 import auth from '../Firebase/Firebase_init'
+import axios from 'axios';
 
 
 const provider = new GoogleAuthProvider();
 export const AuthContext = createContext(null)
 
-export default function AuthProvider({children}) {
-  
-  const [user,setUser] = useState(null)
+export default function AuthProvider({ children }) {
 
-    const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null)
 
-    const creatUser = (email,passWord)=>{
-        setLoading (true)
-        return createUserWithEmailAndPassword(auth,email,passWord)
-    }
+  const [loading, setLoading] = useState(true)
 
-    const loginuser = (email,passWord)=>{
-        setLoading(true)
-        return signInWithEmailAndPassword(auth,email,passWord)
-    }
-    
-    const UpdateProfile = (updateData)=>{
-        setLoading(true)
-        return updateProfile(auth.currentUser,updateData)
+  const creatUser = (email, passWord) => {
+    setLoading(true)
+    return createUserWithEmailAndPassword(auth, email, passWord)
+  }
+
+  const loginuser = (email, passWord) => {
+    setLoading(true)
+    return signInWithEmailAndPassword(auth, email, passWord)
+  }
+
+  const UpdateProfile = (updateData) => {
+    setLoading(true)
+    return updateProfile(auth.currentUser, updateData)
+  }
+
+  const GoogleLogin = () => {
+    setLoading(true)
+    return signInWithPopup(auth, provider)
+  }
+
+  const logout = () => {
+    setLoading(true)
+    return signOut(auth)
+  }
+
+  useEffect(() => {
+    const Unsubscribed = onAuthStateChanged(auth, async (currentUser) => {
+      // console.log('CurrentUser-->', currentUser)
+      if (currentUser?.email) {
+        setUser(currentUser);
+        try {
+          const { data } = await axios.post(
+            `${import.meta.env.VITE_API_URL}/jwt`,
+            { email: currentUser.email },{
+              withCredentials:true
+            }
+          );
+          // console.log('JWT Token:', data);
+        } catch (error) {
+          console.error('JWT fetch error:', error);
+        }
+      } else {
+        try {
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_API_URL}/logout`,
+            {
+              withCredentials:true
+            }
+          );
+          // console.log('JWT Token:', data);
+        } catch (error) {
+          console.error('JWT fetch error:', error);
+        }
+        setUser(null); 
       }
-
-      const GoogleLogin = ()=>{
-        setLoading(true)
-        return signInWithPopup(auth ,provider)
-      }
-
-      const logout =()=>{
-        setLoading(true)
-        return signOut(auth)
-      }
-
-    useEffect(()=>{
-        const Unsubscribed  = onAuthStateChanged(auth,(currentUser)=>{
-          setUser(currentUser)
-          setLoading(false)
-        })
-          return ()=>[
-            Unsubscribed()
-          ]
-      },[])
+      setLoading(false);
+    })
+    return () => [
+      Unsubscribed()
+    ]
+  }, [])
 
 
 
@@ -58,7 +86,7 @@ export default function AuthProvider({children}) {
 
 
 
-  const userInfo ={
+  const userInfo = {
     user,
     loading,
     setUser,
@@ -67,14 +95,14 @@ export default function AuthProvider({children}) {
     loginuser,
     GoogleLogin,
     logout,
-    UpdateProfile 
+    UpdateProfile
   }
 
 
 
   return (
     <AuthContext.Provider value={userInfo}>
-          {children}
+      {children}
     </AuthContext.Provider>
   )
 }

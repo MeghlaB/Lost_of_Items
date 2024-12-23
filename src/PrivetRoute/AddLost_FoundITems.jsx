@@ -1,168 +1,212 @@
-
 import { useContext, useState } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
-import axios from "axios";
+import { Typewriter } from "react-simple-typewriter";
 import Swal from "sweetalert2";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function AddLost_FoundITems() {
+
+export default function AddLost_FoundItem() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    postType: "Lost",
-    thumbnail: "", 
+    thumbnail: "",
     title: "",
+    type: "Lost",
     description: "",
     category: "",
     location: "",
-    dateLost: new Date(),
+    dateLost: "",
+    email: user?.email,
+    name: user?.displayName,
   });
 
-
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
- 
-  const handleDateChange = (date) => {
-    setFormData({ ...formData, dateLost: date });
-  };
-
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const postData = {
-      ...formData,
-      dateLost: formData.dateLost.toISOString(),
-      user: {
-        displayName: user?.displayName,
+    e.target.reset();
+    const from = e.target;
+    const thumbnail = from.thumbnail.value;
+    const title = from.title.value;
+    const type = from.type.value;
+    const description = from.description.value;
+    const category = from.category.value;
+    const location = from.location.value;
+    const dateLost = from.dateLost.value;
+    const addInfo = {
+      thumbnail,
+      title,
+      type,
+      description,
+      category,
+      location,
+      dateLost,
+      user:{
         email: user?.email,
-        image:user?.photoURL
-      },
+        name: user?.displayName,
+      }
+     
     };
 
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/addItem`,
-        postData
-      );
-      console.log(res.data);
-
-      Swal.fire({
-        title: "Success!",
-        text: "Post added successfully!",
-        icon: "success",
-        confirmButtonText: "Done",
+    axios.post(`${import.meta.env.VITE_API_URL}/addItems`,addInfo, {
+     
+    })
+      .then((res) => {
+        console.log('Data received:', res.data);
+        if (res.data.insertedId) {
+          Swal.fire({
+            title: "Success!",
+            text: "Post added successfully!",
+            icon: "success",
+            confirmButtonText: "Done",
+          });
+          navigate('/myItems');
+        }
+      })
+      .catch((err) => {
+        console.error('Error adding item:', err);
+        Swal.fire({
+          title: "Error!",
+          text: "There was an issue adding your post.",
+          icon: "error",
+          confirmButtonText: "Retry",
+        });
       });
-      navigate('/myItems')
-    } catch (error) {
-      console.error("Error adding document: ", error);
-      Swal.fire({
-        title: "Failed!",
-        text: "Post addition failed. Please try again!",
-        icon: "error",
-        confirmButtonText: "Try Again",
-      });
-    }
+    
   };
 
   return (
-    <div className="max-w-lg mx-auto my-10 p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold text-center mb-6">Add Lost/Found Item</h2>
-      <form onSubmit={handleSubmit}>
-        {/* Post Type */}
-        <label className="block mb-2 font-medium">Post Type</label>
-        <select
-          name="postType"
-          value={formData.postType}
-          onChange={handleInputChange}
-          className="select select-bordered w-full mb-4"
-        >
-          <option value="Lost">Lost</option>
-          <option value="Found">Found</option>
-        </select>
-
-        {/* Thumbnail URL */}
-        <label className="block mb-2 font-medium">Thumbnail (Image URL)</label>
-        <input
-          type="url"
-          name="thumbnail"
-          value={formData.thumbnail}
-          onChange={handleInputChange}
-          placeholder="Enter image URL"
-          className="input input-bordered w-full mb-4"
-          required
+    <div className="container mx-auto py-10 px-4">
+      <h2 className="text-3xl font-bold text-center mb-8">
+        <Typewriter
+          words={["Add Lost/Found Item"]}
+          loop={0}
+          cursor
+          cursorStyle="|"
+          typeSpeed={80}
+          deleteSpeed={100}
+          className="text-red-500"
         />
-
-        {/* Title */}
-        <label className="block mb-2 font-medium">Title</label>
-        <input
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleInputChange}
-          placeholder="Enter title"
-          className="input input-bordered w-full mb-4"
-          required
-        />
-
-        {/* Description */}
-        <label className="block mb-2 font-medium">Description</label>
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleInputChange}
-          placeholder="Enter description"
-          className="textarea textarea-bordered w-full mb-4"
-          required
-        />
-
-        {/* Category */}
-        <label className="block mb-2 font-medium">Category</label>
-        <input
-          type="text"
-          name="category"
-          value={formData.category}
-          onChange={handleInputChange}
-          placeholder="e.g.. pets.. documents.. gadgets"
-          className="input input-bordered w-full mb-4"
-          required
-        />
-
-        {/* Location */}
-        <label className="block mb-2 font-medium">Location</label>
-        <input
-          type="text"
-          name="location"
-          value={formData.location}
-          onChange={handleInputChange}
-          placeholder="Where the item was lost/found"
-          className="input input-bordered w-full mb-4"
-          required
-        />
-
-        {/* Date Lost */}
-        <label className="block mb-2 font-medium">Date Lost/Found</label>
-        <DatePicker
-          selected={formData.dateLost}
-          onChange={handleDateChange}
-          className="input input-bordered w-full mb-4"
-        />
-
-        {/* Contact Info */}
+      </h2>
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-2xl mx-auto bg-base-200 p-6 rounded shadow-md"
+      >
         <div className="mb-4">
-          <p className="font-medium">Contact Information:</p>
-          <p className="text-gray-700">Name: {user?.displayName || "N/A"}</p>
-          <p className="text-gray-700">Email: {user?.email || "N/A"}</p>
+          <label className="text-left flex justify-start text-gray-700 font-bold mb-2">Image URL</label>
+          <input
+            type="url"
+            name="thumbnail"
+            value={formData.thumbnail}
+            onChange={handleChange}
+            placeholder="Enter image URL"
+            required
+            className="w-full px-3 py-2 border rounded"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="text-left flex justify-start text-gray-700 font-bold mb-2">Title</label>
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter title"
+            required
+            className="w-full px-3 py-2 border rounded"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="text-left flex justify-start text-gray-700 font-bold mb-2">Post Type</label>
+          <select
+            name="type"
+            value={formData.type}
+            onChange={handleChange}
+            required
+            className="w-full px-3 py-2 border rounded"
+          >
+            <option value="Lost">Lost</option>
+            <option value="Found">Found</option>
+          </select>
+        </div>
+        <div className="mb-4">
+          <label className="text-left flex justify-start text-gray-700 font-bold mb-2">Description</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Enter description"
+            required
+            className="w-full px-3 py-2 border rounded"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="text-left flex justify-start text-gray-700 font-bold mb-2">Category</label>
+          <input
+            type="text"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            placeholder="e.g. pets, documents, gadgets"
+            required
+            className="w-full px-3 py-2 border rounded"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="text-left flex justify-start text-gray-700 font-bold mb-2">Location</label>
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            placeholder="Where the item was lost/found"
+            required
+            className="w-full px-3 py-2 border rounded"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="text-left flex justify-start text-gray-700 font-bold mb-2">Date Lost/Found</label>
+          <input
+            type="date"
+            name="dateLost"
+            value={formData.dateLost}
+            onChange={handleChange}
+            required
+            className="w-full px-3 py-2 border rounded"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="text-left flex justify-start text-gray-700 font-bold mb-2">User Email</label>
+          <input
+            type="email"
+            value={user?.email || ""}
+            readOnly
+            className="w-full px-3 py-2 border rounded bg-gray-100"
+          />
         </div>
 
-        {/* Add Post Button */}
-        <button type="submit" className="btn btn-primary w-full">
-          Add Post
-        </button>
+        <div className="mb-4">
+          <label className="text-left flex justify-start text-gray-700 font-bold mb-2">User Name</label>
+          <input
+            type="text"
+            value={user?.displayName || ""}
+            readOnly
+            className="w-full px-3 py-2 border rounded bg-gray-100"
+          />
+        </div>
+
+        <div className="text-center">
+          <button
+            type="submit"
+            className="btn bg-purple-700 w-full text-white px-6 py-2 rounded hover:bg-[#796B96]"
+          >
+            Add Post
+          </button>
+        </div>
       </form>
     </div>
   );

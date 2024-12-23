@@ -3,10 +3,10 @@ import { useCallback, useEffect, useState } from "react";
 export default function Banner() {
   const [currentSlider, setCurrentSlider] = useState(0);
   const carouselImages = [
-    { title: "Lost of Items - Medical Support", description: "Your contribution can make a life-changing difference.", bgColor: "bg-red-500" },
-    { title: "Lost of Items - Friendship", description: "A cheerful group of friends sharing a light moment.", bgColor: "bg-green-500" },
-    { title: "Lost of Items - Creativity", description: "Support creative projects and business initiatives.", bgColor: "bg-blue-500" },
-    { title: "Lost of Items - Community Help", description: "Help bring the community together and support each other.", bgColor: "bg-yellow-500" }
+    { title: "Lost of Items - Medical Support", description: "Your contribution can make a life-changing difference." },
+    { title: "Lost of Items - Friendship", description: "A cheerful group of friends sharing a light moment."  },
+    { title: "Lost of Items - Creativity", description: "Support creative projects and business initiatives."  },
+    { title: "Lost of Items - Community Help", description: "Help bring the community together and support each other." }
   ];
 
   const prevSlider = () => setCurrentSlider((currentSlider) => currentSlider === 0 ? carouselImages.length - 1 : currentSlider - 1);

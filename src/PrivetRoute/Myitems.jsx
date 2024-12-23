@@ -1,124 +1,136 @@
-import React, { useContext, useEffect } from 'react'
-import { AuthContext } from '../AuthProvider/AuthProvider'
-import { useState } from 'react'
-import axios from 'axios'
-import { Link, useParams } from 'react-router-dom'
-import Swal from 'sweetalert2'
+import { useContext, useState, useEffect } from "react";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import Swal from "sweetalert2";
+import axios from "axios"; 
+import { Link } from "react-router-dom";
 
 export default function Myitems() {
-  const {id} = useParams()
+  const { user } = useContext(AuthContext); 
+  const [postItems, setPostItems] = useState([]); 
+  const [loading, setLoading] = useState(true); 
 
-  const { user, loading, setLoading } = useContext(AuthContext)
-  const [postsItems, setPostItmes] = useState([])
 
-  useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL}/allItems?email=${user?.email}`)
-      .then(res => {
-        setLoading(false)
-        setPostItmes(res.data)
-      })
-  }, [])
-
-// delate post item
-const handleDelete= async (_id)=>{
-  Swal.fire({
-    title: "Are you sure?",
-    text: "Your Lost Or Found Items!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!"
-  }).then(async(result) => {
-    if (result.isConfirmed) {
-      console.log(_id)
-     try{
-      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/items/${_id}`)
-     
-      if (res.status === 200) {
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your post has been deleted.",
-          icon: "success",
-        });
-
-        const updatepost = postsItems.filter(post=>post._id !== _id)
-        setPostItmes(updatepost)
-
-      } else {
+  const fetchItems = async () => {
+    try {
+    
+      if (!user?.email) {
         Swal.fire({
           title: "Error!",
-          text: "Failed to delete the post.",
+          text: "No user email found!",
           icon: "error",
         });
+        return;
       }
-    } 
-    catch (error) {
+
+
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/myItems/${user?.email}`);
+      console.log(postItems)
+      setPostItems(res.data); 
+    } catch (error) {
+      console.error('Error fetching items:', error);
       Swal.fire({
         title: "Error!",
-        text: error.res?.data?.message || "An unexpected error occurred.",
+        text: "There was an issue fetching your items.",
         icon: "error",
+        confirmButtonText: "Retry",
       });
-      console.error("Error deleting item:", error);
+    } finally {
+      setLoading(false); 
     }
-  }
-      
-})
+  };
 
 
+  useEffect(() => {
+    if (user?.email) {
+      fetchItems();
+    }
+  }, [user?.email]);
 
-}
-
-
-
+// deleted post data
+  const handleDelete = async (_id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This item will be permanently deleted!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axios.delete(`${import.meta.env.VITE_API_URL}/items/${_id}`);
+          if (res.status === 200) {
+            Swal.fire('Deleted!', 'Your item has been deleted.', 'success');
+            setPostItems(postItems.filter((post) => post._id !== _id));
+          }
+        } catch (error) {
+          Swal.fire('Error!', 'Failed to delete the post.', 'error');
+          console.error('Error deleting item:', error);
+        }
+      }
+    });
+  };
 
 
 
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-4">My  Posts</h2>
-
-      {loading ? (
-        <span className="loading loading-ring loading-lg"></span>
-      ) : postsItems.length === 0 ? (
-        <p>You have not added any posts yet. Start adding items!</p>
-      ) : (
-        <table className="min-w-full table-auto border-collapse border  border-gray-300">
-          <thead>
-            <tr className='bg-purple-600 text-white'>
-              <th className="border border-gray-300 px-4 py-2">Title</th>
-              <th className="border border-gray-300 px-4 py-2">Category</th>
-              <th className="border border-gray-300 px-4 py-2">Location</th>
-              <th className="border border-gray-300 px-4 py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {postsItems.map((post) => (
-              <tr key={post._id} className="border-b border-gray-300">
-                <td className="border px-4 py-2">{post.title}</td>
-                <td className="border px-4 py-2">{post.category}</td>
-                <td className="border px-4 py-2">{post.location}</td>
-                <td className="border px-4 py-2 flex justify-around">
-                  <Link to={`/updatePost/${post._id}`}>
-                    <button
-                      className="bg-purple-600 text-white px-4 py-2 rounded-md"
-                      onClick={() => handleUpdate(post._id)}
-                    >
-                      Update
-                    </button>
-                  </Link>
-                  <button
-                    className="bg-red-500 text-white px-4 py-2 rounded-md"
-                    onClick={() => handleDelete(post._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
-  )
+    <div className="container mx-auto py-10 px-4">
+    {loading ? (
+      <p className="text-xl text-center text-gray-500">Loading...</p> 
+    ) : (
+      <div>
+        {postItems.length === 0 ? (
+          <p className="text-xl text-center text-gray-500">No items found.</p> 
+        ) : (
+          <div>
+            <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
+              My Items
+            </h2>
+            <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+              <table className="table-auto w-full border-collapse">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Title</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Type</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Category</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Location</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {postItems.map(item => (
+                    <tr key={item._id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900 border-b">{item.title}</td>
+                      <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.type}</td>
+                      <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.category}</td>
+                      <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.location}</td>
+                      <td className="px-6 py-4 text-sm text-gray-700 border-b">
+                        <div className="flex space-x-2">
+                          <Link to={`/updatePost/${item._id}`}>
+                            <button
+                              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            >
+                              Update
+                            </button>
+                          </Link>
+                          <button
+                            onClick={() => handleDelete(item._id)} 
+                            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+      </div>
+    )}
+  </div>
+  );
 }
