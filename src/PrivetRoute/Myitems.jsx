@@ -1,18 +1,20 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
-import axios from "axios"; 
+import axios from "axios";
 import { Link } from "react-router-dom";
+import UserAxiosSecure from "../Hooks/UserAxiosSecure";
+
 
 export default function Myitems() {
-  const { user } = useContext(AuthContext); 
-  const [postItems, setPostItems] = useState([]); 
-  const [loading, setLoading] = useState(true); 
-
+  const axiosSecure = UserAxiosSecure()
+  const { user } = useContext(AuthContext);
+  const [postItems, setPostItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchItems = async () => {
     try {
-    
+
       if (!user?.email) {
         Swal.fire({
           title: "Error!",
@@ -23,19 +25,14 @@ export default function Myitems() {
       }
 
 
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/myItems/${user?.email}`);
+      const res = await axiosSecure.get(`/myItems/${user?.email}`);
       console.log(postItems)
-      setPostItems(res.data); 
+      setPostItems(res.data);
     } catch (error) {
       console.error('Error fetching items:', error);
-      Swal.fire({
-        title: "Error!",
-        text: "There was an issue fetching your items.",
-        icon: "error",
-        confirmButtonText: "Retry",
-      });
+
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -46,7 +43,7 @@ export default function Myitems() {
     }
   }, [user?.email]);
 
-// deleted post data
+  // deleted post data
   const handleDelete = async (_id) => {
     Swal.fire({
       title: 'Are you sure?',
@@ -59,7 +56,7 @@ export default function Myitems() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await axios.delete(`${import.meta.env.VITE_API_URL}/items/${_id}`);
+          const res = await axiosSecure.delete(`/items/${_id}`);
           if (res.status === 200) {
             Swal.fire('Deleted!', 'Your item has been deleted.', 'success');
             setPostItems(postItems.filter((post) => post._id !== _id));
@@ -76,61 +73,61 @@ export default function Myitems() {
 
   return (
     <div className="container mx-auto py-10 px-4">
-    {loading ? (
-      <p className="text-xl text-center text-gray-500">Loading...</p> 
-    ) : (
-      <div>
-        {postItems.length === 0 ? (
-          <p className="text-xl text-center text-gray-500">No items found.</p> 
-        ) : (
-          <div>
-            <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
-              My Items
-            </h2>
-            <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
-              <table className="table-auto w-full border-collapse">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Title</th>
-                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Type</th>
-                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Category</th>
-                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Location</th>
-                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {postItems.map(item => (
-                    <tr key={item._id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 text-sm font-medium text-gray-900 border-b">{item.title}</td>
-                      <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.type}</td>
-                      <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.category}</td>
-                      <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.location}</td>
-                      <td className="px-6 py-4 text-sm text-gray-700 border-b">
-                        <div className="flex space-x-2">
-                          <Link to={`/updatePost/${item._id}`}>
-                            <button
-                              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            >
-                              Update
-                            </button>
-                          </Link>
-                          <button
-                            onClick={() => handleDelete(item._id)} 
-                            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </td>
+      {loading ? (
+        <p className="text-xl text-center text-gray-500">Loading...</p>
+      ) : (
+        <div>
+          {postItems.length === 0 ? (
+            <p className="text-xl text-center text-gray-500">No items found.</p>
+          ) : (
+            <div>
+              <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
+                My Items
+              </h2>
+              <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+                <table className="table-auto w-full border-collapse">
+                  <thead className="bg-gray-100">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Title</th>
+                      <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Type</th>
+                      <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Category</th>
+                      <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Location</th>
+                      <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {postItems.map(item => (
+                      <tr key={item._id} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 text-sm font-medium text-gray-900 border-b">{item.title}</td>
+                        <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.type}</td>
+                        <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.category}</td>
+                        <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.location}</td>
+                        <td className="px-6 py-4 text-sm text-gray-700 border-b">
+                          <div className="flex space-x-2">
+                            <Link to={`/updatePost/${item._id}`}>
+                              <button
+                                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                              >
+                                Update
+                              </button>
+                            </Link>
+                            <button
+                              onClick={() => handleDelete(item._id)}
+                              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-    )}
-  </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 }

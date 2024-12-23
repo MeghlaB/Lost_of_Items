@@ -5,8 +5,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate, useLoaderData, useParams } from "react-router-dom";
 import axios from "axios";
+import UserAxiosSecure from "../Hooks/UserAxiosSecure";
 
 export default function UpdatePost() {
+    const axiosSecure = UserAxiosSecure()
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const updateData = useLoaderData();
@@ -50,8 +52,8 @@ console.log(updateData)
 
     try {
       // Use axios to send the data to the server
-      const response = await axios.put(
-        `${import.meta.env.VITE_API_URL}/items/${_id}`,
+      const response = await axiosSecure.put(
+        `/items/${_id}`,
         updatedPost,
         { headers: { "Content-Type": "application/json" } }
       );

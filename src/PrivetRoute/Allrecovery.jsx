@@ -4,15 +4,17 @@ import axios from 'axios'
 import { TfiLayoutGrid3Alt } from 'react-icons/tfi'
 import { CiViewTable } from 'react-icons/ci'
 import { Typewriter } from 'react-simple-typewriter'
+import UserAxiosSecure from '../Hooks/UserAxiosSecure'
 
 export default function Allrecovery() {
+    const axiosSecure = UserAxiosSecure()
     const { user, loading, setLoading } = useContext(AuthContext)
     const [recoveredItems, setIsRecovered] = useState([])
     const [iscardLayOut, setLayOut] = useState(false)
 
 
     useEffect(() => {
-        axios.get(`${import.meta.env.VITE_API_URL}/allrcoveries`)
+        axiosSecure.get(`/allrcoveries`)
             .then(res => {
                 setIsRecovered(res.data)
             })

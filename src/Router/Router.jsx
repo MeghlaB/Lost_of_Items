@@ -57,16 +57,8 @@ const router = createBrowserRouter([
 
         },
         {
-          
-            path:'/delatePosts',
-            element:<DelatePost></DelatePost>
-
-          
-
-        },
-        {
           path:'/allrecovere',
-          element:<Allrecovery></Allrecovery>
+          element:<PrivetRoute><Allrecovery></Allrecovery></PrivetRoute>
         }
         ,
         {
