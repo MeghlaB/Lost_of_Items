@@ -64,12 +64,12 @@ export default function Navbar() {
                     // Logged-in User Menu
                     <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn m-1">
-                                <img src={user.photoURL}
+                                <img src={user?.photoURL}
                                  className="w-8 h-8 rounded-full cursor-pointer"
                                  alt="" />
                             </div>
                             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                            <p className="mb-2 border-2 px-3 py-3">{user.displayName}</p>
+                            <p className="mb-2 border-2 px-3 py-3">{user?.displayName}</p>
                             <NavLink
                                 to="/addItems"
                                 className="block hover:text-blue-600 mb-2"

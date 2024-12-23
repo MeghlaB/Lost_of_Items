@@ -38,6 +38,7 @@ export default function AddLost_FoundITems() {
       user: {
         displayName: user?.displayName,
         email: user?.email,
+        image:user?.photoURL
       },
     };
 
