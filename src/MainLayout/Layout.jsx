@@ -2,10 +2,12 @@ import React from 'react'
 import Navbar from '../Components/Navbar'
 import { Outlet } from 'react-router-dom'
 import Footer from '../Components/Footer'
+import DynamicTitle from '../Components/Hamlet'
 
 export default function Layout() {
     return (
         <div>
+            <DynamicTitle></DynamicTitle>
             <header>
                 <Navbar></Navbar>
             </header>
