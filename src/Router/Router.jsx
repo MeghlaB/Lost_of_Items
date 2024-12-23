@@ -12,6 +12,7 @@ import LoginPage from "../Pages/LoginPage";
 import AddLost_FoundITems from "../PrivetRoute/AddLost_FoundITems";
 import DetailsPages from "../PrivetRoute/DetailsPages";
 import PrivetRoute from "../PrivetRoute/Privet";
+import Myitems from "../PrivetRoute/Myitems";
 
 
   
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
         {
           path:'/addItems',
           element:<AddLost_FoundITems></AddLost_FoundITems>
+        },
+        {
+          path:'/myItems',
+          element:<Myitems></Myitems>
         },
         {
           path:'/details/:id',

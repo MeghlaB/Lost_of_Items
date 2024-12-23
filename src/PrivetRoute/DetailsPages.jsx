@@ -3,30 +3,40 @@ import { useParams } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import axios from "axios";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Swal from "sweetalert2";
 
 export default function DetailsPages() {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
-  const [item, setItem] = useState([]);
-  const [modalOpen, setmodalOpen] = useState(false);
+  const [item, setItem] = useState({});
+  const [modalOpen, setModalOpen] = useState(false);
   const [recoveryDate, setRecoveryDate] = useState(new Date());
-  const [recoverLocation, setRecoveryLocaion] = useState('');
-  const [isRecovered, setIsRecovered] = useState(false); // New state to track recovery
+  const [recoverLocation, setRecoveryLocation] = useState("");
+  const [isRecovered, setIsRecovered] = useState(false);
 
-  // axios data get
+  
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/items/${id}`)
       .then((res) => {
         setItem(res.data);
-      });
-  }, []);
+        setIsRecovered(res.data.status === "recovered"); 
+      })
+      .catch((error) => console.error("Error fetching item:", error));
+  }, [id]);
 
-  // handle submit data
+
+
   const handleSubmit = async () => {
+    if (!recoverLocation) {
+      Swal.fire("Error!", "Recovery location is required.", "warning");
+      return;
+    }
+    const formattedDate = recoveryDate.toISOString();
     const recoveryData = {
       recoverLocation,
-      recoveryDate,
+      recoveryDate:formattedDate,
       recoverBy: {
         email: user?.email,
         name: user?.displayName,
@@ -35,22 +45,26 @@ export default function DetailsPages() {
     };
 
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/recovere`,
-        recoveryData
-      );
+     
+      await axios.post(`${import.meta.env.VITE_API_URL}/recovere`, recoveryData);
 
-      console.log("Response Data:", res.data);
+      
+      await axios.patch(`${import.meta.env.VITE_API_URL}/items/${id}`, {
+        status: "recovered",
+      });
 
-      setmodalOpen(false);
-      setIsRecovered(true); // Mark as recovered
+      Swal.fire("Success!", "The item has been marked as recovered.", "success");
+      setModalOpen(false);
+      setIsRecovered(true); 
     } catch (error) {
       console.error("Error adding recovery data:", error);
+      Swal.fire("Error!", "Failed to mark the item as recovered.", "error");
     }
   };
 
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto my-10">
+     
       <div className="relative">
         <img
           className="w-full h-[250px] lg:h-[550px] object-cover"
@@ -62,6 +76,7 @@ export default function DetailsPages() {
         </div>
       </div>
 
+  
       <div className="p-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">{item.title}</h2>
         <p className="text-gray-600 text-xl font-semibold mb-4">
@@ -84,10 +99,11 @@ export default function DetailsPages() {
         </div>
       </div>
 
+     
       <div className="p-6 bg-gray-50 flex justify-end">
         <button
           disabled={isRecovered}
-          onClick={() => setmodalOpen(true)}
+          onClick={() => setModalOpen(true)}
           className={`btn text-white px-6 py-3 rounded-lg transition-all duration-200 ${
             isRecovered
               ? "bg-gray-400 cursor-not-allowed"
@@ -101,20 +117,24 @@ export default function DetailsPages() {
             : "This is Mine!"}
         </button>
       </div>
+
+    
       {modalOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded shadow-md w-1/3">
             <h2 className="text-xl font-semibold mb-4">Recovery Details</h2>
 
+   
             <label className="block mb-2">Recovered Location:</label>
             <input
               type="text"
               value={recoverLocation}
-              onChange={(e) => setRecoveryLocaion(e.target.value)}
+              onChange={(e) => setRecoveryLocation(e.target.value)}
               className="w-full px-4 py-2 border rounded mb-4"
               placeholder="Enter location"
             />
 
+      
             <label className="block mb-2">Recovered Date:</label>
             <DatePicker
               selected={recoveryDate}
@@ -122,10 +142,32 @@ export default function DetailsPages() {
               className="w-full px-4 py-2 border rounded mb-4"
             />
 
+           
+            <div className="flex items-center space-x-4 mb-4">
+              {user?.photoURL && (
+                <img
+                  src={user?.photoURL}
+                  alt="User"
+                  className="w-16 h-16 rounded-full border-2 border-purple-600"
+                />
+              )}
+              <div>
+                <p className="text-gray-600">
+                  <span className="font-semibold">Email: </span>
+                  {user?.email}
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-semibold">Name: </span>
+                  {user?.displayName}
+                </p>
+              </div>
+            </div>
+
+          
             <div className="flex justify-end gap-4">
               <button
                 className="px-4 py-2 bg-red-500 text-white rounded"
-                onClick={() => setmodalOpen(false)}
+                onClick={() => setModalOpen(false)}
               >
                 Cancel
               </button>

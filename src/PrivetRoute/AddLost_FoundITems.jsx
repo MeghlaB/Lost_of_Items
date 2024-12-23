@@ -5,9 +5,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
 
 export default function AddLost_FoundITems() {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     postType: "Lost",
     thumbnail: "", 
@@ -55,6 +57,7 @@ export default function AddLost_FoundITems() {
         icon: "success",
         confirmButtonText: "Done",
       });
+      navigate('/myItems')
     } catch (error) {
       console.error("Error adding document: ", error);
       Swal.fire({
