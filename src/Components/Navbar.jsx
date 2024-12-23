@@ -77,7 +77,7 @@ export default function Navbar() {
                              Add Lost & Found Item
                          </NavLink>
                             <NavLink
-                                to="/allRecovered"
+                                to='/allrecovere'
                                 className="block hover:text-blue-600 mb-2"
                          >
                                  All Recovered Items

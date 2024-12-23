@@ -15,7 +15,7 @@ export default function DetailsPages() {
   const [recoverLocation, setRecoveryLocation] = useState("");
   const [isRecovered, setIsRecovered] = useState(false);
 
-  
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/items/${id}`)
@@ -27,7 +27,6 @@ export default function DetailsPages() {
   }, [id]);
 
 
-
   const handleSubmit = async () => {
     if (!recoverLocation) {
       Swal.fire("Error!", "Recovery location is required.", "warning");
@@ -37,6 +36,8 @@ export default function DetailsPages() {
     const recoveryData = {
       recoverLocation,
       recoveryDate:formattedDate,
+      title:item.title,
+      category:item.category,
       recoverBy: {
         email: user?.email,
         name: user?.displayName,

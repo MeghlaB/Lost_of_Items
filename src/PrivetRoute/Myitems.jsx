@@ -83,9 +83,9 @@ const handleDelete= async (_id)=>{
       ) : postsItems.length === 0 ? (
         <p>You have not added any posts yet. Start adding items!</p>
       ) : (
-        <table className="min-w-full table-auto border-collapse border border-gray-300">
+        <table className="min-w-full table-auto border-collapse border  border-gray-300">
           <thead>
-            <tr>
+            <tr className='bg-purple-600 text-white'>
               <th className="border border-gray-300 px-4 py-2">Title</th>
               <th className="border border-gray-300 px-4 py-2">Category</th>
               <th className="border border-gray-300 px-4 py-2">Location</th>
@@ -101,7 +101,7 @@ const handleDelete= async (_id)=>{
                 <td className="border px-4 py-2 flex justify-around">
                   <Link to={`/updatePost/${post._id}`}>
                     <button
-                      className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                      className="bg-purple-600 text-white px-4 py-2 rounded-md"
                       onClick={() => handleUpdate(post._id)}
                     >
                       Update

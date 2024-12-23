@@ -15,6 +15,7 @@ import PrivetRoute from "../PrivetRoute/Privet";
 import Myitems from "../PrivetRoute/Myitems";
 import UpdatePost from "../PrivetRoute/UpdatePost";
 import DelatePost from "../PrivetRoute/DelatePost";
+import Allrecovery from "../PrivetRoute/Allrecovery";
 
 
   
@@ -61,6 +62,11 @@ const router = createBrowserRouter([
           
 
         },
+        {
+          path:'/allrecovere',
+          element:<Allrecovery></Allrecovery>
+        }
+        ,
         {
           path:'/details/:id',
           element:<PrivetRoute><DetailsPages></DetailsPages></PrivetRoute>
