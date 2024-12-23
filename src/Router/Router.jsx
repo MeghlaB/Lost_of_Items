@@ -13,6 +13,8 @@ import AddLost_FoundITems from "../PrivetRoute/AddLost_FoundITems";
 import DetailsPages from "../PrivetRoute/DetailsPages";
 import PrivetRoute from "../PrivetRoute/Privet";
 import Myitems from "../PrivetRoute/Myitems";
+import UpdatePost from "../PrivetRoute/UpdatePost";
+import DelatePost from "../PrivetRoute/DelatePost";
 
 
   
@@ -44,6 +46,20 @@ const router = createBrowserRouter([
         {
           path:'/myItems',
           element:<Myitems></Myitems>
+        },
+        {
+          path:'/updatePost/:id',
+          element:<UpdatePost></UpdatePost>,
+          loader:({params})=>fetch(`${import.meta.env.VITE_API_URL}/items/${params.id}`)
+
+        },
+        {
+          
+            path:'/delatePosts',
+            element:<DelatePost></DelatePost>
+
+          
+
         },
         {
           path:'/details/:id',
