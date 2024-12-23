@@ -17,7 +17,7 @@ import UpdatePost from "../PrivetRoute/UpdatePost";
 import DelatePost from "../PrivetRoute/DelatePost";
 import Allrecovery from "../PrivetRoute/Allrecovery";
 import ErrorPage from "../Pages/ErrorPage";
-
+import ScrollToTopOnMount from "../Components/ScrollComponent";
 
   
 const router = createBrowserRouter([
@@ -70,8 +70,12 @@ const router = createBrowserRouter([
         }
         ,
         {
+          
           path:'/details/:id',
-          element:<PrivetRoute><DetailsPages></DetailsPages></PrivetRoute>
+          element:<PrivetRoute>
+            <ScrollToTopOnMount></ScrollToTopOnMount>
+            <DetailsPages></DetailsPages>
+            </PrivetRoute>
         }
       ]
     },
