@@ -1,4 +1,4 @@
-// 
+
 import { useContext, useState } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import axios from "axios";
@@ -10,7 +10,7 @@ export default function AddLost_FoundITems() {
   const { user } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     postType: "Lost",
-    thumbnail: "", // URL হিসেবে ধরে নেওয়া
+    thumbnail: "", 
     title: "",
     description: "",
     category: "",
@@ -18,18 +18,18 @@ export default function AddLost_FoundITems() {
     dateLost: new Date(),
   });
 
-  // ইনপুট চেঞ্জ হ্যান্ডলার
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // তারিখ চেঞ্জ হ্যান্ডলার
+ 
   const handleDateChange = (date) => {
     setFormData({ ...formData, dateLost: date });
   };
 
-  // সাবমিট হ্যান্ডলার
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const postData = {

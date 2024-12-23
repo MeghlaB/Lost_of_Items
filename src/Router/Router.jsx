@@ -41,7 +41,7 @@ const router = createBrowserRouter([
           element:<AddLost_FoundITems></AddLost_FoundITems>
         },
         {
-          path:'/details',
+          path:'/details/:id',
           element:<PrivetRoute><DetailsPages></DetailsPages></PrivetRoute>
         }
       ]
