@@ -12,10 +12,10 @@ export default function UpdatePost() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const updateData = useLoaderData();
-console.log(updateData)
+// console.log(updateData)
 
   const { _id, thumbnail, title, description, category, location, dateLost, type } = updateData;
-  console.log(_id)
+  // console.log(_id)
 
   const [formData, setFormData] = useState({
     postType: type || "Lost", 

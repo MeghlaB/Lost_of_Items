@@ -87,16 +87,18 @@
 // }
 
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import UserAxiosSecure from "../Hooks/UserAxiosSecure";
 import { Typewriter } from "react-simple-typewriter";
 import { TfiLayoutGrid3Alt } from "react-icons/tfi";
 import { CiViewTable } from "react-icons/ci";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 
 export default function AllRecoveries() {
     const axiosSecure = UserAxiosSecure()
+    const{user} = useContext(AuthContext)
   const [recoveries, setRecoveries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -105,7 +107,7 @@ export default function AllRecoveries() {
   useEffect(() => {
   
     axiosSecure
-      .get('allrecoveries', {
+      .get(`/allrecoveries?email=${user?.email}`, {
         
       })
       .then((response) => {

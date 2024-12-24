@@ -21,7 +21,7 @@ export default function Register() {
         const email = form.email.value;
         const photUrl = form.photUrl.value
         const password = form.password.value
-        console.log(name, email, photUrl, password)
+        // console.log(name, email, photUrl, password)
         // password validation
         if (password.length < 6) {
             return setError('Password must be at least 6 character')
@@ -61,7 +61,7 @@ export default function Register() {
                     })
             })
             .catch((err) => {
-                console.log(err.message)
+                // console.log(err.message)
                 Swal.fire({
                     title: 'Error!',
                     text: `Registration failed! Error:${err.code}`,

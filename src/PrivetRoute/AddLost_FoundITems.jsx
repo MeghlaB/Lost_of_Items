@@ -56,7 +56,7 @@ export default function AddLost_FoundItem() {
      
     })
       .then((res) => {
-        console.log('Data received:', res.data);
+        // console.log('Data received:', res.data);
         if (res.data.insertedId) {
           Swal.fire({
             title: "Success!",

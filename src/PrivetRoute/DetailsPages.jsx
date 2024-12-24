@@ -5,8 +5,10 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
+import UserAxiosSecure, { axiosSecure } from "../Hooks/UserAxiosSecure";
 
 export default function DetailsPages() {
+    const axiosSecure = UserAxiosSecure()
   const { id } = useParams();
   const { user } = useContext(AuthContext);
   const [item, setItem] = useState({});
@@ -16,8 +18,8 @@ export default function DetailsPages() {
   const [isRecovered, setIsRecovered] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/items/${id}`)
+    axiosSecure
+      .get(`/items/${id}`)
       .then((res) => {
         setItem(res.data);
         setIsRecovered(res.data.status === "recovered");
@@ -50,13 +52,13 @@ export default function DetailsPages() {
     };
 
     try {
-      console.log("Sending recovery data:", recoveryData);
+      // console.log("Sending recovery data:", recoveryData);
 
       // POST request
-      await axios.post(`${import.meta.env.VITE_API_URL}/recovere`, recoveryData);
+      await axiosSecure.post(`/recovere`, recoveryData);
 
       // PATCH request
-      await axios.patch(`${import.meta.env.VITE_API_URL}/items/${id}`, {
+      await axiosSecure.patch(`/items/${id}`, {
         status: "recovered",
       });
 

@@ -20,7 +20,7 @@ useEffect(()=>{
             return res
         },
         async error=>{
-            console.log('error caught from our very axios interceptors--->',error.response)
+            // console.log('error caught from our very axios interceptors--->',error.response)
            if(error.response.status === 401 || error.response.status === 403){
             // logout
             logout()

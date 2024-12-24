@@ -26,7 +26,7 @@ export default function Myitems() {
 
 
       const res = await axiosSecure.get(`/myItems/${user?.email}`);
-      console.log(postItems)
+      // console.log(postItems)
       setPostItems(res.data);
     } catch (error) {
       console.error('Error fetching items:', error);

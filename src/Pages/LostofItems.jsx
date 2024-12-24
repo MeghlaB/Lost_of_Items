@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import UserAxiosSecure, { axiosSecure } from "../Hooks/UserAxiosSecure";
 
 const LostofItems = () => {
+  const axiosSecure = UserAxiosSecure()
   const [items, setItems] = useState([]);
 
   // Data Fetch
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/allItems`)
+    axiosSecure
+      .get(`/allItems`)
       .then((res) => setItems(res.data))
       .catch((error) => console.error("Failed to fetch items:", error));
   }, []);
