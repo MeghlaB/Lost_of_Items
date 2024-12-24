@@ -1,7 +1,9 @@
 import React from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { motion } from "motion/react"
+import { easeOut } from 'motion';
+import { Typewriter } from 'react-simple-typewriter';
 
 export default function MakeQuestions() {
     const handleMessage = (e) => {
@@ -14,12 +16,30 @@ export default function MakeQuestions() {
     return (
       <div>
         <div className='pb-6'>
-        <h1 className='text-2xl font-bold text-center'>What Questions Do Our Customers  <br /><span className='text-blue-500'>Ask Most Often?</span></h1>
+        <motion.h1
+            animate={{ x:30 }}
+            transition={{ duration: 2, delay: 1, ease: easeOut, repeat: Infinity }}
+            className=" text-2xl lg:text-5xl font-bold text-center">What Questions Do Our Customers<br /><span
+            className='text-purple-600'
+             >
+                <Typewriter
+                    words={[' Ask Most Often?']}
+                    loop={Infinity}
+                    cursor
+                    cursorStyle={<span style={{ color: 'purple', fontSize: '30px' }}>_</span>}
+                    typeSpeed={100}
+                    delaySpeed={1000}
+                    className="text-purple-600"
+                  />
+                </span>
+        </motion.h1>
+        {/* <h1 className='text-2xl font-bold text-center'>  </h1> */}
         <p></p>
         </div>
           <div className='w-full  lg:grid  lg:grid-cols-2 gap-2 items-center' >
-            
-            <div className='space-y-3'>
+            <motion.div 
+            animate={{ y: [200,0] }}
+            transition={{duration: 10}} className='space-y-3'>
                 <div className="collapse collapse-plus bg-base-200">
                     <input type="radio" name="my-accordion-3" defaultChecked />
                     <div className="collapse-title text-xl font-medium">How Much Does it Cost</div>
@@ -55,12 +75,29 @@ export default function MakeQuestions() {
                         <p>hello</p>
                     </div>
                 </div>
-            </div>
+            </motion.div>
             {/* Cotact us */}
             <div>
-            <h2 className="text-center text-3xl font-semibold pb-5 tracking-tight">Do You Have Any Question?</h2>
-            <div className="w-full max-w-md mx-auto rounded-lg  px-10 pb-10 pt-8 shadow-md bg-base-200">
-        
+
+            <h2 className="text-center text-3xl font-semibold pb-5 tracking-tight">Do You Have Any 
+                <span
+                className='text-purple-600'
+                >
+                <Typewriter
+                    words={[' Question?']}
+                    loop={Infinity}
+                    cursor
+                    cursorStyle={<span style={{ color: 'purple', fontSize: '30px' }}>_</span>}
+                    typeSpeed={100}
+                    delaySpeed={1000}
+                    className="text-purple-600"
+                  />
+                </span>
+               </h2>
+            <motion.div 
+            animate={{ y: [200,0] }}
+            transition={{duration: 10}}
+            className="w-full max-w-md mx-auto rounded-lg  px-10 pb-10 pt-8 shadow-md bg-base-200">
                 <form className="w-full space-y-6">
                     <div className="space-y-2 text-sm text-zinc-700 dark:text-zinc-400">
                         <label className="block font-medium" htmlFor="name">
@@ -103,7 +140,7 @@ export default function MakeQuestions() {
                     onClick={handleMessage}
                     className="rounded-md bg-sky-500 px-4 py-2 text-white transition-colors hover:bg-sky-600 dark:bg-sky-700">Send Message</button>
                 </form>
-            </div>
+            </motion.div>
             </div>
 
         </div>

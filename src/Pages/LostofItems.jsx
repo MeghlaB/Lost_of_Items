@@ -28,6 +28,7 @@ const LostofItems = () => {
           <div key={item._id} className="card card-compact bg-base-100 w-96 shadow-xl">
             <figure>
               <img
+              className="w-96 h-56"
                 src={item.thumbnail}
                 alt="thumbnail" />
             </figure>

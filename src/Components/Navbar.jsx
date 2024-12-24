@@ -33,11 +33,11 @@ export default function Navbar() {
                     <ul
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                            <NavLink to={'/'}>Home</NavLink>
-                            <NavLink to={'/allItems'}>Lost & Found Items Page</NavLink>
-                            <NavLink to={'/addItems'}>Add Lost & Found Item</NavLink>
-                            <NavLink to={'/allrecovere'}>All Recovered Items</NavLink>
-                            <NavLink to={'/myItems'}> Manage My Items</NavLink>
+                            <NavLink className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""} to={'/'}>Home</NavLink>
+                            <NavLink className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""} to={'/allItems'}>Lost & Found Items Page</NavLink>
+                            <NavLink className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""}  to={'/addItems'}>Add Lost & Found Item</NavLink>
+                            <NavLink className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""} to={'/allrecovere'}>All Recovered Items</NavLink>
+                            <NavLink  className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""} to={'/myItems'}> Manage My Items</NavLink>
 
                     </ul>
                 </div>
@@ -48,8 +48,8 @@ export default function Navbar() {
             </div>
             <div className="navbar-center hidden  lg:flex">
                 <ul className="menu menu-horizontal px-1 text-[18px] font-bold  gap-4">
-                    <NavLink to={'/'}>Home</NavLink>
-                    <NavLink to={'/allItems'}>Lost & Found Items Page</NavLink>
+                    <NavLink className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""} to={'/'}>Home</NavLink>
+                    <NavLink className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""}  to={'/allItems'}>Lost & Found Items Page</NavLink>
                     <NavLink></NavLink>
 
                 </ul>
@@ -70,32 +70,34 @@ export default function Navbar() {
                     <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn m-1">
                                 <img src={user?.photoURL}
-                                 className="w-8 h-8 rounded-full cursor-pointer"
+                                 className="w-10 h-10  rounded-full cursor-pointer"
                                  alt="" />
                             </div>
                             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                            <p className="mb-2 border-2 px-3 py-3">{user?.displayName}</p>
+                            <p className="mb-2 border-2 px-3 py-4 ">{user?.displayName}</p>
                             <NavLink
+                            className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""}
                                 to="/addItems"
-                                className="block hover:text-blue-600 mb-2"
                             >
                              Add Lost & Found Item
                          </NavLink>
                             <NavLink
+                            className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""}
                                 to='/allrecovere'
-                                className="block hover:text-blue-600 mb-2"
+                                
                          >
                                  All Recovered Items
                              </NavLink>
                              <NavLink
+                             className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""}
                                  to="/myItems"
-                                 className="block hover:text-blue-600 mb-2"
+                                
                              >
                                  Manage My Items
                              </NavLink>
                              <button
                                  onClick={logout}
-                                 className="bg-red-500 text-white p-2 rounded hover:bg-red-600"
+                                 className="bg-red-500 text-white mt-4 p-4 rounded hover:bg-red-600"
                           >
                                  Logout
                             </button>

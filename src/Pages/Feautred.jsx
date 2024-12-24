@@ -11,6 +11,12 @@ import sevent from '../../src/assets/alert.jpeg'
 import egith from '../../src/assets/eight.png'
 import nine from '../../src/assets/seven.png'
 
+{/* <motion.img
+src={team1}
+animate={{ y: [50, 100, 50] }}
+transition={{duration: 10, repeat: Infinity}}
+className="max-w-sm w-96 rounded-t-[40px] rounded-br-[40px] shadow-2xl border-l-8 border-b-8 border-blue-800" /> */}
+
 export default function Featured() {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">

@@ -3,11 +3,13 @@ import Banner from './Banner'
 import LatestFindLostItems from './LatestFindLostItems'
 import Feautred from './Feautred'
 import MakeQuestions from './MakeQuestions'
+import Logosection from './Logosection'
 
 export default function Home() {
     return (
         <div>
             <Banner></Banner>
+            {/* <Logosection></Logosection> */}
             <LatestFindLostItems></LatestFindLostItems>
             <div className='p-10'>
                 <Feautred></Feautred>
