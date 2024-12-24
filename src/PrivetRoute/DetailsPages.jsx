@@ -15,29 +15,33 @@ export default function DetailsPages() {
   const [recoverLocation, setRecoveryLocation] = useState("");
   const [isRecovered, setIsRecovered] = useState(false);
 
-
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/items/${id}`)
       .then((res) => {
         setItem(res.data);
-        setIsRecovered(res.data.status === "recovered"); 
+        setIsRecovered(res.data.status === "recovered");
       })
       .catch((error) => console.error("Error fetching item:", error));
   }, [id]);
 
-
   const handleSubmit = async () => {
-    if (!recoverLocation) {
-      Swal.fire("Error!", "Recovery location is required.", "warning");
+    if (!recoverLocation.trim()) {
+      Swal.fire("Error!", "Please provide a valid recovery location.", "warning");
       return;
     }
+
+    if (!recoveryDate || isNaN(new Date(recoveryDate).getTime())) {
+      Swal.fire("Error!", "Please select a valid recovery date.", "warning");
+      return;
+    }
+
     const formattedDate = recoveryDate.toISOString();
     const recoveryData = {
       recoverLocation,
-      recoveryDate:formattedDate,
-      title:item.title,
-      category:item.category,
+      recoveryDate: formattedDate,
+      title: item.title,
+      category: item.category,
       recoverBy: {
         email: user?.email,
         name: user?.displayName,
@@ -46,26 +50,41 @@ export default function DetailsPages() {
     };
 
     try {
-     
+      console.log("Sending recovery data:", recoveryData);
+
+      // POST request
       await axios.post(`${import.meta.env.VITE_API_URL}/recovere`, recoveryData);
 
-      
+      // PATCH request
       await axios.patch(`${import.meta.env.VITE_API_URL}/items/${id}`, {
         status: "recovered",
       });
 
+      // Success feedback
       Swal.fire("Success!", "The item has been marked as recovered.", "success");
-      setModalOpen(false);
-      setIsRecovered(true); 
+      closeModal();
+      setIsRecovered(true);
     } catch (error) {
       console.error("Error adding recovery data:", error);
       Swal.fire("Error!", "Failed to mark the item as recovered.", "error");
     }
   };
 
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  
+
+
+
+
+
+
+
+
+
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto my-10">
-     
       <div className="relative">
         <img
           className="w-full h-[250px] lg:h-[550px] object-cover"
@@ -77,7 +96,6 @@ export default function DetailsPages() {
         </div>
       </div>
 
-  
       <div className="p-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">{item.title}</h2>
         <p className="text-gray-600 text-xl font-semibold mb-4">
@@ -88,7 +106,7 @@ export default function DetailsPages() {
             <span className="font-semibold">
               <span className="text-xl font-bold">Location</span>:
             </span>{" "}
-            {item.location}
+            {item.recoverLocation || "Not recovered yet"}
           </p>
           <p>
             <span className="font-semibold">Category:</span> {item.category}
@@ -100,7 +118,6 @@ export default function DetailsPages() {
         </div>
       </div>
 
-     
       <div className="p-6 bg-gray-50 flex justify-end">
         <button
           disabled={isRecovered}
@@ -119,13 +136,11 @@ export default function DetailsPages() {
         </button>
       </div>
 
-    
       {modalOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded shadow-md w-1/3">
             <h2 className="text-xl font-semibold mb-4">Recovery Details</h2>
 
-   
             <label className="block mb-2">Recovered Location:</label>
             <input
               type="text"
@@ -135,7 +150,6 @@ export default function DetailsPages() {
               placeholder="Enter location"
             />
 
-      
             <label className="block mb-2">Recovered Date:</label>
             <DatePicker
               selected={recoveryDate}
@@ -143,7 +157,6 @@ export default function DetailsPages() {
               className="w-full px-4 py-2 border rounded mb-4"
             />
 
-           
             <div className="flex items-center space-x-4 mb-4">
               {user?.photoURL && (
                 <img
@@ -164,11 +177,10 @@ export default function DetailsPages() {
               </div>
             </div>
 
-          
             <div className="flex justify-end gap-4">
               <button
                 className="px-4 py-2 bg-red-500 text-white rounded"
-                onClick={() => setModalOpen(false)}
+                onClick={closeModal}
               >
                 Cancel
               </button>
