@@ -106,7 +106,7 @@ export default function Myitems() {
                           <div className="flex space-x-2">
                             <Link to={`/updatePost/${item._id}`}>
                               <button
-                                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
                               >
                                 Update
                               </button>

@@ -33,6 +33,11 @@ export default function Navbar() {
                     <ul
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                            <NavLink to={'/'}>Home</NavLink>
+                            <NavLink to={'/allItems'}>Lost & Found Items Page</NavLink>
+                            <NavLink to={'/addItems'}>Add Lost & Found Item</NavLink>
+                            <NavLink to={'/allrecovere'}>All Recovered Items</NavLink>
+                            <NavLink to={'/myItems'}> Manage My Items</NavLink>
 
                     </ul>
                 </div>

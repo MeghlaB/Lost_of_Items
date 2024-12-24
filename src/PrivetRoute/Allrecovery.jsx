@@ -103,7 +103,7 @@ export default function AllRecoveries() {
   const [iscardLayOut, setLayOut] = useState(false)
 
   useEffect(() => {
-    // Fetch recovered items from the backend
+  
     axiosSecure
       .get('allrecoveries', {
         

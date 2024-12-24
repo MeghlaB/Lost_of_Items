@@ -165,7 +165,7 @@ console.log(updateData)
     <input
       type="email"
       name="userEmail"
-      value={formData.userEmail} // Assuming this is coming from state or props
+      value={formData.userEmail} 
       className="input input-bordered w-full mb-4"
       readOnly
     />
@@ -175,7 +175,7 @@ console.log(updateData)
     <input
       type="text"
       name="userName"
-      value={formData.userName} // Assuming this is coming from state or props
+      value={formData.userName} 
       className="input input-bordered w-full mb-4"
       readOnly
     />

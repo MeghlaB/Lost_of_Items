@@ -185,7 +185,7 @@ export default function DetailsPages() {
                 Cancel
               </button>
               <button
-                className="px-4 py-2 bg-green-500 text-white rounded"
+                className="px-4 py-2 bg-purple-600 text-white rounded"
                 onClick={handleSubmit}
               >
                 Submit
