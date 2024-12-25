@@ -7,10 +7,9 @@ import { Typewriter } from 'react-simple-typewriter';
 
 const LatestFindLostItems = () => {
     const [items, setItems] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
+
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
-    // Fetching items
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL}/allItems`)
             .then(res => {
@@ -18,16 +17,11 @@ const LatestFindLostItems = () => {
             });
     }, []);
 
-    // Sorting and filtering items
     const sortedItems = items.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 6);
 
-    const filteredItems = sortedItems.filter(
-        item =>
-            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.location.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+   
 
-    // Handle cursor movement
+
     const handleMouseMove = (e) => {
         setCursorPos({
             x: e.clientX,
@@ -36,10 +30,10 @@ const LatestFindLostItems = () => {
     };
 
     useEffect(() => {
-        // Add event listener for mouse movement
+      
         window.addEventListener('mousemove', handleMouseMove);
 
-        // Cleanup on unmount
+     
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
         };
@@ -59,20 +53,6 @@ const LatestFindLostItems = () => {
                 />
             </h2>
 
-            {/* Search Input */}
-            <div className="mb-6">
-                <label className="input border-2 border-purple-600 input-bordered flex items-center gap-2">
-                    <input
-                        type="text"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="grow"
-                        placeholder="Search by title or location..."
-                    />
-                    <FaSearch />
-                </label>
-            </div>
-
             {/* Custom Cursor */}
             <motion.div
                 className="cursor"
@@ -91,8 +71,8 @@ const LatestFindLostItems = () => {
             />
 
             <div className="pt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                {filteredItems.length > 0 ? (
-                    filteredItems.map((item) => (
+                {sortedItems.length > 0 ? (
+                    sortedItems.map((item) => (
                         <motion.div
                             key={item._id}
                             className="card card-compact bg-base-100 w-96 shadow-xl m-2"
