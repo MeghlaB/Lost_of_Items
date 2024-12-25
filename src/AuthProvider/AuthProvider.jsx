@@ -56,24 +56,26 @@ export default function AuthProvider({ children }) {
         }
       } else {
         try {
-          const { data } = await axios.get(
-            `${import.meta.env.VITE_API_URL}/logout`,
+          const { data } = await axios.post(
+            `${import.meta.env.VITE_API_URL}/logout`,{},
             {
               withCredentials:true
             }
+            
           );
+          setUser(null); 
           // console.log('JWT Token:', data);
         } catch (error) {
           console.error('JWT fetch error:', error);
         }
-        setUser(null); 
+        // setUser(null); 
       }
       setLoading(false);
     })
     return () => [
       Unsubscribed()
     ]
-  }, [])
+  }, [user])
 
 
 

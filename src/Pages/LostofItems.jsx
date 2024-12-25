@@ -17,7 +17,7 @@ const LostofItems = () => {
       .get(`/allItems`)
       
       .then((res) => {
-        console.log(items)
+        // console.log(items)
         setItems(res.data)
       })
       .catch((error) => console.error("Failed to fetch items:", error));
