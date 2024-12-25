@@ -24,7 +24,9 @@
 ⁕ **Tailwind CSS**: For creating a responsive, mobile-first design.
 
 ⁕ **React Router**: To handle routing and navigation within the app.
+
 ⁕  **JWT Authentication**: For secure user login and authorization.
+
 ***SweetAlert**: For displaying alerts and notifications throughout the app.
 
 #6. **Deployment**

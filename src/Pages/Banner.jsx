@@ -9,10 +9,10 @@ import image4 from '../../src/assets/Imaegs/jni n.jpeg'
 export default function Banner() {
   const [currentSlider, setCurrentSlider] = useState(0);
   const carouselImages = [
-    { image:image1, title: "Support Medical Expenses", description: "Your contribution can make a life-changing difference." },
-    { image: image2, title: "Group of Friends Sharing a Light Moment Outdoors", description: "A cheerful group of four friends standing in a lush, green outdoor setting." },
-    { image: image3, title: "Support Business Initiatives", description: "Help raise funds to launch new products or services." },
-    { image: image4, title: "Support Creative Projects", description: "Provide financial assistance for creating small businesses, films, apps, and more." }
+    { image:image1, title: "Lost & Found Central", description: "Your hub for finding lost items and sharing found treasures. Together, we make recovery simple!" },
+    { image: image2, title: "Reconnect with What’s Lost", description: "Turn chances into reality. Find your lost belongings or return found items effortlessly. Let’s bridge the gap between lost and found!." },
+    { image: image3, title: "Lost & Found Alliance", description: "Be the change. Share found items or locate your missing ones. Empowering communities to recover with purpose and ease." },
+    { image: image4, title: "Treasure Recovery Zone", description: "Lost something special? Found something valuable? We make it easy to reunite people with their cherished possessions." }
   ];
 
   const prevSlider = () => setCurrentSlider((currentSlider) => currentSlider === 0 ? carouselImages.length - 1 : currentSlider - 1);

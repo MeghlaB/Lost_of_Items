@@ -24,17 +24,17 @@ export default function DetailsPages() {
         setItem(res.data);
         setIsRecovered(res.data.status === "recovered");
       })
-      .catch((error) => console.error("Error fetching item:", error));
+      .catch((error) => console.error(" fetching item:", error));
   }, [id]);
 
   const handleSubmit = async () => {
     if (!recoverLocation.trim()) {
-      Swal.fire("Error!", "Please provide a valid recovery location.", "warning");
+      Swal.fire("Error!", "Please provide a recovery location.", "warning");
       return;
     }
 
     if (!recoveryDate || isNaN(new Date(recoveryDate).getTime())) {
-      Swal.fire("Error!", "Please select a valid recovery date.", "warning");
+      Swal.fire("Error!", "Please select a recovery date.", "warning");
       return;
     }
 
@@ -52,38 +52,26 @@ export default function DetailsPages() {
     };
 
     try {
-      // console.log("Sending recovery data:", recoveryData);
-
-      // POST request
+     
       await axiosSecure.post(`/recovere`, recoveryData);
 
-      // PATCH request
       await axiosSecure.patch(`/items/${id}`, {
         status: "recovered",
       });
 
-      // Success feedback
-      Swal.fire("Success!", "The item has been marked as recovered.", "success");
+     
+      Swal.fire("SuccessFully Update!");
       closeModal();
       setIsRecovered(true);
     } catch (error) {
-      console.error("Error adding recovery data:", error);
-      Swal.fire("Error!", "Failed to mark the item as recovered.", "error");
+      console.error("Error adding recovery:", error);
+      Swal.fire( "Failed to mark the item as recovered", "error");
     }
   };
 
   const closeModal = () => {
     setModalOpen(false);
   };
-  
-
-
-
-
-
-
-
-
 
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto my-10">

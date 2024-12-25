@@ -1,19 +1,35 @@
-import React, { useContext, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import logo from '../assets/logo.png'
-import { AuthContext } from '../AuthProvider/AuthProvider'
-import { ThemeContext } from '../AuthProvider/ThemeProvider'
-import { MdSunny } from 'react-icons/md'
-import { FiMoon } from 'react-icons/fi'
-
-
+import React, { useContext, useState, useEffect } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import logo from '../assets/logo.png';
+import { AuthContext } from '../AuthProvider/AuthProvider';
+import { ThemeContext } from '../AuthProvider/ThemeProvider';
+import { MdSunny } from 'react-icons/md';
+import { FiMoon } from 'react-icons/fi';
 
 export default function Navbar() {
-    const { togglebtn, theme } = useContext(ThemeContext)
-    const { user, logout } = useContext(AuthContext)
+    const { togglebtn, theme } = useContext(ThemeContext);
+    const { user, logout } = useContext(AuthContext);
+    const [scrolled, setscrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setscrolled(window.scrollY > 0);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     return (
-        <div className="navbar bg-base-300 ">
+        <div
+            className={`navbar ${
+                scrolled
+                    ? 'fixed top-0 left-0 w-full bg-base-300 bg-opacity-70 backdrop-blur-md z-50 shadow-lg'
+                    : 'static bg-base-300'
+            } transition-all duration-300`}
+        >
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -22,94 +38,174 @@ export default function Navbar() {
                             className="h-5 w-5"
                             fill="none"
                             viewBox="0 0 24 24"
-                            stroke="currentColor">
+                            stroke="currentColor"
+                        >
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                                 strokeWidth="2"
-                                d="M4 6h16M4 12h8m-8 6h16" />
+                                d="M4 6h16M4 12h8m-8 6h16"
+                            />
                         </svg>
                     </div>
                     <ul
                         tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                            <NavLink className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""} to={'/'}>Home</NavLink>
-                            <NavLink className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""} to={'/allItems'}>Lost & Found Items Page</NavLink>
-                            <NavLink className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""}  to={'/addItems'}>Add Lost & Found Item</NavLink>
-                            <NavLink className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""} to={'/allrecovere'}>All Recovered Items</NavLink>
-                            <NavLink  className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""} to={'/myItems'}> Manage My Items</NavLink>
-
+                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                    >
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'text-black font-bold border-b-4 border-purple-600'
+                                    : ''
+                            }
+                            to={'/'}
+                        >
+                            Home
+                        </NavLink>
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'text-black font-bold border-b-4 border-purple-600'
+                                    : ''
+                            }
+                            to={'/allItems'}
+                        >
+                            Lost & Found Items Page
+                        </NavLink>
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'text-black font-bold border-b-4 border-purple-600'
+                                    : ''
+                            }
+                            to={'/addItems'}
+                        >
+                            Add Lost & Found Item
+                        </NavLink>
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'text-black font-bold border-b-4 border-purple-600'
+                                    : ''
+                            }
+                            to={'/allrecovere'}
+                        >
+                            All Recovered Items
+                        </NavLink>
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'text-black font-bold border-b-4 border-purple-600'
+                                    : ''
+                            }
+                            to={'/myItems'}
+                        >
+                            Manage My Items
+                        </NavLink>
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl"> <img
-                    className='w-10 h-10 rounded-full hidden lg:block '
-                    src={logo} alt="" />
-                    Lost&Found </a>
+                <a className="btn btn-ghost text-xl">
+                    {' '}
+                    <img className="w-10 h-10 rounded-full hidden lg:block" src={logo} alt="" />
+                    Lost&Found{' '}
+                </a>
             </div>
-            <div className="navbar-center hidden  lg:flex">
+            <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 text-[18px] font-bold  gap-4">
-                    <NavLink className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""} to={'/'}>Home</NavLink>
-                    <NavLink className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""}  to={'/allItems'}>Lost & Found Items Page</NavLink>
-                    <NavLink></NavLink>
-
+                    <NavLink
+                        className={({ isActive }) =>
+                            isActive
+                                ? 'text-black font-bold border-b-4 border-purple-600'
+                                : ''
+                        }
+                        to={'/'}
+                    >
+                        Home
+                    </NavLink>
+                    <NavLink
+                        className={({ isActive }) =>
+                            isActive
+                                ? 'text-black font-bold border-b-4 border-purple-600'
+                                : ''
+                        }
+                        to={'/allItems'}
+                    >
+                        Lost & Found Items Page
+                    </NavLink>
                 </ul>
             </div>
             <div className="navbar-end gap-3">
-                {/* toggole switch  */}
+                {/* toggle switch */}
                 <div>
                     <button
                         onClick={togglebtn}
-                        className={`px-4 py-2 text-sm font-bold transition duration-300 rounded-md shadow ${theme === "light" ? "text-black hover:bg-gray-200" : " font-bold hover:bg-gray-800 hover:text-white"
-                            }`}
+                        className={`px-4 py-2 text-sm font-bold transition duration-300 rounded-md shadow ${
+                            theme === 'light'
+                                ? 'text-black hover:bg-gray-200'
+                                : 'font-bold hover:bg-gray-800 hover:text-white'
+                        }`}
                     >
-                        {theme === "light" ? <MdSunny /> : <FiMoon />}
+                        {theme === 'light' ? <MdSunny /> : <FiMoon />}
                     </button>
                 </div>
                 {user ? (
-                    // Logged-in User Menu
                     <div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="btn m-1">
-                                <img src={user?.photoURL}
-                                 className="w-10 h-10  rounded-full cursor-pointer"
-                                 alt="" />
-                            </div>
-                            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                            <p className="mb-2 border-2 px-3 py-4 ">{user?.displayName}</p>
+                        <div tabIndex={0} role="button" className="btn m-1">
+                            <img
+                                src={user?.photoURL}
+                                className="w-10 h-10 rounded-full cursor-pointer"
+                                alt=""
+                            />
+                        </div>
+                        <ul
+                            tabIndex={0}
+                            className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                        >
+                            <p className="mb-2 border-2 px-3 py-4">{user?.displayName}</p>
                             <NavLink
-                            className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""}
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? 'text-black font-bold border-b-4 border-purple-600'
+                                        : ''
+                                }
                                 to="/addItems"
                             >
-                             Add Lost & Found Item
-                         </NavLink>
+                                Add Lost & Found Item
+                            </NavLink>
                             <NavLink
-                            className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""}
-                                to='/allrecovere'
-                                
-                         >
-                                 All Recovered Items
-                             </NavLink>
-                             <NavLink
-                             className={({ isActive}) =>isActive ? "text-balck font-bold border-b-4 border-purple-600 " : ""}
-                                 to="/myItems"
-                                
-                             >
-                                 Manage My Items
-                             </NavLink>
-                             <button
-                                 onClick={logout}
-                                 className="bg-red-500 text-white mt-4 p-4 rounded hover:bg-red-600"
-                          >
-                                 Logout
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? 'text-black font-bold border-b-4 border-purple-600'
+                                        : ''
+                                }
+                                to="/allrecovere"
+                            >
+                                All Recovered Items
+                            </NavLink>
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? 'text-black font-bold border-b-4 border-purple-600'
+                                        : ''
+                                }
+                                to="/myItems"
+                            >
+                                Manage My Items
+                            </NavLink>
+                            <button
+                                onClick={logout}
+                                className="bg-red-500 text-white mt-4 p-4 rounded hover:bg-red-600"
+                            >
+                                Logout
                             </button>
-                            </ul>
-                        </div>
+                        </ul>
+                    </div>
                 ) : (
-                    // Login Button
                     <NavLink to="/login" className="hover:text-gray-200">
                         Login
                     </NavLink>
                 )}
             </div>
         </div>
-    )
+    );
 }

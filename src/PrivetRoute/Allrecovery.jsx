@@ -14,10 +14,10 @@ import { Link } from "react-router-dom";
 export default function AllRecoveries() {
     const axiosSecure = UserAxiosSecure()
     const{user} = useContext(AuthContext)
-  const [recoveries, setRecoveries] = useState([]);
+  const [recoveriesPost, setRecoveriesPost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [iscardLayOut, setLayOut] = useState(false)
+  const [cardLayOut, setLayOut] = useState(false)
 
   useEffect(() => {
   
@@ -26,7 +26,7 @@ export default function AllRecoveries() {
         
       })
       .then((response) => {
-        setRecoveries(response.data);
+        setRecoveriesPost(response.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -52,22 +52,22 @@ export default function AllRecoveries() {
     <div className='text-right mb-4'>
         <button
             className=" bg-purple-600 px-4 py-2 text-3xl text-white rounded"
-            onClick={() => setLayOut(!iscardLayOut)}
+            onClick={() => setLayOut(!cardLayOut)}
         >
             {
-                iscardLayOut ? <TfiLayoutGrid3Alt /> : <CiViewTable />
+                cardLayOut ? <TfiLayoutGrid3Alt /> : <CiViewTable />
             }
         </button>
     </div>
 
-    {recoveries.length === 0 ? (
+    {recoveriesPost.length === 0 ? (
         <div className="text-center text-xl text-gray-600">
             No recovered items found. You haven't recovered any items yet.
         </div>
-    ) : iscardLayOut ? (
+    ) : cardLayOut ? (
         // Card Layout
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {recoveries.map((item) => (
+            {recoveriesPost.map((item) => (
                 <div key={item._id} className="border border-1  p-4 rounded shadow hover:shadow-lg animate-puls">
                     <div>
                     <img 
@@ -86,15 +86,15 @@ export default function AllRecoveries() {
         <table className="table-auto w-full border-collapse">
           <thead className="bg-gray-100">
             <tr>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Title</th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Type</th>
+              <th className="px-6 py-3 text-left text-[16px] font-medium text-gray-700 border-b">Title</th>
+              <th className="px-6 py-3 text-left text-[16px] font-medium text-gray-700 border-b">Type</th>
               <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Category</th>
               <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Recovered Location</th>
               <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Recovered Date</th>
             </tr>
           </thead>
           <tbody>
-            {recoveries.map(item => (
+            {recoveriesPost.map(item => (
               <tr key={item._id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 text-sm font-medium text-gray-900 border-b">{item.title}</td>
                 <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.type}</td>
