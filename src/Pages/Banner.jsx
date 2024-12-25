@@ -54,10 +54,10 @@ export default function Banner() {
       </div>
       
 
-      <div className="ease-linear duration-500 flex transform-gpu" style={{ transform: `translateX(-${currentSlider * 100}%)` }}>
+      <div className="ease-linear duration-500 flex transform-gpu custom-banner" style={{ transform: `translateX(-${currentSlider * 100}%)` }}>
 
         {carouselImages.map((slide, idx) => (
-          <img key={slide.image} src={slide.image} className="min-w-full h-60 bg-black/20 sm:h-96 md:h-[540px] object-cover" alt={`Slider - ${idx + 1}`} />
+          <img key={slide.image} src={slide.image} className="min-w-full h-60 bg-black/20 sm:h-96 md:h-[540px] object-cover " alt={`Slider - ${idx + 1}`} />
         ))}
       </div>
     </div>

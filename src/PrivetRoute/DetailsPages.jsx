@@ -22,6 +22,7 @@ export default function DetailsPages() {
       .get(`/items/${id}`)
       .then((res) => {
         setItem(res.data);
+        console.log(item)
         setIsRecovered(res.data.status === "recovered");
       })
       .catch((error) => console.error(" fetching item:", error));
@@ -96,7 +97,7 @@ export default function DetailsPages() {
             <span className="font-semibold">
               <span className="text-xl font-bold">Location</span>:
             </span>{" "}
-            {item.recoverLocation || "Not recovered yet"}
+            {item.location || "Not recovered yet"}
           </p>
           <p>
             <span className="font-semibold">Category:</span> {item.category}
@@ -120,7 +121,7 @@ export default function DetailsPages() {
         >
           {isRecovered
             ? "Recovered"
-            : item.postType === "Lost"
+            : item.postType ==="Lost"
             ? "Found This!"
             : "This is Mine!"}
         </button>

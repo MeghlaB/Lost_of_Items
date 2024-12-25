@@ -15,7 +15,11 @@ const LostofItems = () => {
   useEffect(() => {
     axiosSecure
       .get(`/allItems`)
-      .then((res) => setItems(res.data))
+      
+      .then((res) => {
+        console.log(items)
+        setItems(res.data)
+      })
       .catch((error) => console.error("Failed to fetch items:", error));
   }, []);
 
