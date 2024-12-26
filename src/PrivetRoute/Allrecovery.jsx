@@ -24,7 +24,7 @@ export default function AllRecoveries() {
                 setLoading(false);
             })
             .catch((err) => {
-                setError("Error fetching data");
+                setError("No Recovery data");
                 setLoading(false);
             });
     }, [user?.email]);
