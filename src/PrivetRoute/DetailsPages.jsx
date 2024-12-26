@@ -82,9 +82,9 @@ export default function DetailsPages() {
           src={item.thumbnail}
           alt={item.title}
         />
-        {/* <div className="absolute top-4 left-4 bg-purple-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
+        <div className="absolute top-4 left-4 bg-purple-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
           {item.type === "Lost" ? "Lost Item" : "Found Item"}
-        </div> */}
+        </div>
       </div>
 
       <div className="p-6">
