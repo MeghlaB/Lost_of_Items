@@ -22,7 +22,7 @@ export default function DetailsPages() {
       .get(`/items/${id}`)
       .then((res) => {
         setItem(res.data);
-        console.log(res.data)
+        // console.log(res.data)
         setIsRecovered(res.data.status === "recovered");
       })
       .catch((error) => console.error(" fetching item:", error));

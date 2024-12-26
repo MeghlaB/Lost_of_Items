@@ -97,7 +97,7 @@ export default function LoginPage() {
                         </div>
                         <p>Don't Have An Account ?<span>
                             <NavLink
-                                to={'/register'} className='text-blue-700 underline'>SignUp</NavLink></span></p>
+                                to={'/register'} className='text-blue-700 underline'> SignUp</NavLink></span></p>
 
                         <div className="mt-3 space-y-3 sm:space-y-5">
                             <hr className="border-zinc-700" />

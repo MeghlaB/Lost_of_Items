@@ -45,6 +45,7 @@ export default function AddLost_FoundItem() {
       category,
       location,
       dateLost,
+      
       user:{
         email: user?.email,
         name: user?.displayName,

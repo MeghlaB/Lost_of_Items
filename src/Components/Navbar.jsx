@@ -199,8 +199,8 @@ export default function Navbar() {
                         </ul>
                     </div>
                 ) : (
-                    <NavLink to="/login" className="hover:text-gray-200">
-                        Login
+                    <NavLink to="/login" className="hover:text-gray-200 rounded-md bg-purple-500 px-4 py-2 text-white transition-colors hover:bg-pueple-600 dark:bg-purple-700">
+                       LogIn
                     </NavLink>
                 )}
             </div>
