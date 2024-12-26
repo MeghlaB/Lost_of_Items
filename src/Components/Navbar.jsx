@@ -110,7 +110,7 @@ export default function Navbar() {
                 </a>
             </div>
             <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1 text-[18px] font-bold  gap-4">
+                <ul className="menu menu-horizontal px-1 text-[19px] font-bold  gap-4">
                     <NavLink
                         className={({ isActive }) =>
                             isActive
