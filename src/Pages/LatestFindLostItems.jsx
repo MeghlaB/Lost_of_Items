@@ -19,7 +19,7 @@ const LatestFindLostItems = () => {
 
     const sortedItems = items.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 6);
 
-   
+
 
 
     const handleMouseMove = (e) => {
@@ -30,10 +30,10 @@ const LatestFindLostItems = () => {
     };
 
     useEffect(() => {
-      
+
         window.addEventListener('mousemove', handleMouseMove);
 
-     
+
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
         };
@@ -64,7 +64,7 @@ const LatestFindLostItems = () => {
                     width: '20px',
                     height: '20px',
                     borderRadius: '50%',
-                    backgroundColor: 'rgba(128, 0, 128, 0.8)', // Purple color
+                    backgroundColor: 'rgba(128, 0, 128, 0.8)',
                     transform: 'translate(-50%, -50%)',
                     transition: 'transform 0.2s ease-in-out',
                 }}
@@ -78,7 +78,7 @@ const LatestFindLostItems = () => {
                             className="card card-compact bg-base-100 w-96 shadow-xl m-2"
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            whileHover={{ scale: 1.05 }}  // Scale on hover
+                            whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.5 }}
                         >
                             <figure>
@@ -103,7 +103,10 @@ const LatestFindLostItems = () => {
                         </motion.div>
                     ))
                 ) : (
-                    <p className="text-center text-lg text-gray-500">No items found.</p>
+                    <div className="flex items-center justify-center pt-6">
+                        <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-8 border-dotted border-sky-600"></div>
+                    </div>
+
                 )}
             </div>
             <div className="flex justify-center items-center mt-6">

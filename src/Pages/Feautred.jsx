@@ -10,12 +10,27 @@ import sixth from '../../src/assets/sixth.jpeg'
 import sevent from '../../src/assets/alert.jpeg'
 import egith from '../../src/assets/eight.png'
 import nine from '../../src/assets/seven.png'
+import { div } from 'framer-motion/client';
+import { Typewriter } from 'react-simple-typewriter';
 
 
 
 export default function Featured() {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+        <div>
+            <h1 className='text-center text-2xl pb-8 font-bold'
+>
+                <Typewriter
+                    words={['Featured ']}
+                    loop={Infinity}
+                    cursor
+                    cursorStyle={<span style={{ color: 'purple', fontSize: '30px' }}>_</span>}
+                    typeSpeed={100}
+                    delaySpeed={1000}
+                    // className="text-purple-600"
+                />
+                </h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
             <motion.div 
                 className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-transform transform" 
                 whileHover={{ scale: 1.05, y: -10 }} 
@@ -105,6 +120,7 @@ export default function Featured() {
                 <h3 className="text-lg font-semibold text-center text-gray-800 mb-2">Detailed History</h3>
                 <p className="text-gray-600 text-sm">Keep track of all activities throughout the entire Lost and Found Software. Perfect for audits, detailed reporting and investigating.</p>
             </motion.div>
+        </div>
         </div>
     )
 }

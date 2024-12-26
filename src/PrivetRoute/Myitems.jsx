@@ -74,14 +74,16 @@ export default function Myitems() {
   return (
     <div className="container mx-auto py-10 px-4">
       {loading ? (
-        <div className="w-10 h-10 animate-[spin_1s_linear_infinite] rounded-full border-double border-4 border-r-0 border-l-0 border-b-sky-400 border-t-sky-700"></div>
+         <div className="flex justify-center pt-6 items-center">
+         <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-8 border-dotted border-sky-600"></div>
+       </div>
       ) : (
         <div>
           {postItems.length === 0 ? (
             <p className="text-xl text-center text-gray-500">No items found.</p>
           ) : (
             <div>
-              <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
+              <h2 className="text-3xl font-semibold text-center text-purple-800 mb-6">
                 My Items
               </h2>
               <div className="overflow-x-auto bg-white shadow-lg rounded-lg">

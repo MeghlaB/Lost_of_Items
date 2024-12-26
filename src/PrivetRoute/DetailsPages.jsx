@@ -22,7 +22,7 @@ export default function DetailsPages() {
       .get(`/items/${id}`)
       .then((res) => {
         setItem(res.data);
-        // console.log(item)
+        console.log(res.data)
         setIsRecovered(res.data.status === "recovered");
       })
       .catch((error) => console.error(" fetching item:", error));
@@ -83,7 +83,7 @@ export default function DetailsPages() {
           alt={item.title}
         />
         <div className="absolute top-4 left-4 bg-purple-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
-          {item.postType === "Lost" ? "Lost Item" : "Found Item"}
+          {item.type === "Lost" ? "Lost Item" : "Found Item"}
         </div>
       </div>
 
@@ -121,7 +121,7 @@ export default function DetailsPages() {
         >
           {isRecovered
             ? "Recovered"
-            : item.postType ==="Lost"
+            : item.type==="Lost"
             ? "Found This!"
             : "This is Mine!"}
         </button>

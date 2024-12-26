@@ -24,11 +24,10 @@ export default function Navbar() {
 
     return (
         <div
-            className={`navbar ${
-                scrolled
+            className={`navbar ${scrolled
                     ? 'fixed top-0 left-0 w-full bg-base-300 bg-opacity-70 backdrop-blur-md z-50 shadow-lg'
                     : 'static bg-base-300'
-            } transition-all duration-300`}
+                } transition-all duration-300`}
         >
             <div className="navbar-start">
                 <div className="dropdown">
@@ -50,7 +49,7 @@ export default function Navbar() {
                     </div>
                     <ul
                         tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2  shadow"
                     >
                         <NavLink
                             className={({ isActive }) =>
@@ -106,8 +105,8 @@ export default function Navbar() {
                 </div>
                 <a className="btn btn-ghost text-xl">
                     {' '}
-                    <img className="w-10 h-10 rounded-full hidden lg:block" src={logo} alt="" />
-                    Lost&Found{' '}
+                    <img className="w-10 h-10  rounded-full hidden lg:block" src={logo} alt="" />
+                   <span className='banner-design'>Lost&Found</span>
                 </a>
             </div>
             <div className="navbar-center hidden lg:flex">
@@ -136,17 +135,15 @@ export default function Navbar() {
             </div>
             <div className="navbar-end gap-3">
                 {/* toggle switch */}
-                <div>
-                    <button
-                        onClick={togglebtn}
-                        className={`px-4 py-2 text-sm font-bold transition duration-300 rounded-md shadow ${
-                            theme === 'light'
-                                ? 'text-black hover:bg-gray-200'
-                                : 'font-bold hover:bg-gray-800 hover:text-white'
-                        }`}
-                    >
-                        {theme === 'light' ? <MdSunny /> : <FiMoon />}
-                    </button>
+                <div className="form-control">
+                    <label className="label cursor-pointer">
+                        <input
+                            type="checkbox"
+                            className="toggle toggle-primary"
+                            checked={theme === 'dark'}
+                            onChange={togglebtn}
+                        />
+                    </label>
                 </div>
                 {user ? (
                     <div className="dropdown dropdown-end">
@@ -159,9 +156,10 @@ export default function Navbar() {
                         </div>
                         <ul
                             tabIndex={0}
-                            className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                            className="dropdown-content menu border-2 border-purple-400 space-y-4 bg-base-300  rounded-box z-[1] w-52 p-2 shadow"
                         >
-                            <p className="mb-2 border-2 px-3 py-4">{user?.displayName}</p>
+                            <p className="mb-2 border-2 px-3 design border-1 border-purple-950 py-4"
+                            >{user?.displayName}</p>
                             <NavLink
                                 className={({ isActive }) =>
                                     isActive
