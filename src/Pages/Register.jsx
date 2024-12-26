@@ -2,7 +2,7 @@
 import Lottie from "lottie-react";
 
 import registeranimation from '../../public/register.json'
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { NavLink, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -13,7 +13,7 @@ export default function Register() {
 
     const { creatUser, UpdateProfile, setUser, setLoading } = useContext(AuthContext)
     const navigate = useNavigate('/')
-
+const [error,setError] = useState('')
     const handleRegister = e => {
         e.preventDefault()
         const form = e.target;
@@ -115,6 +115,8 @@ export default function Register() {
                                 <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                             </label>
                         </div>
+                        {error && <div className="text-red-600 text-sm mt-2">{error}</div>} 
+
                         <div className="form-control mt-6">
                             <button className="btn btn-primary">Register</button>
                         </div>
