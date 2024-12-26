@@ -57,8 +57,9 @@ export default function Myitems() {
       if (result.isConfirmed) {
         try {
           const res = await axiosSecure.delete(`/items/${_id}`);
+          // console.log(res)
           if (res.status === 200) {
-            Swal.fire('Deleted!', 'Your item has been deleted.', 'success');
+            Swal.fire('Deleted!', 'Your item has been deleted.', 'success')
             setPostItems(postItems.filter((post) => post._id !== _id));
           }
         } catch (error) {
@@ -98,8 +99,11 @@ export default function Myitems() {
                     </tr>
                   </thead>
                   <tbody>
+                   
                     {postItems.map(item => (
+                     
                       <tr key={item._id} className="hover:bg-gray-50">
+                        
                         <td className="px-6 py-4 text-sm font-medium text-gray-900 border-b">{item.title}</td>
                         <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.type}</td>
                         <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.category}</td>

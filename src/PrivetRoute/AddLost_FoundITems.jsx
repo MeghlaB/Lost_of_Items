@@ -9,10 +9,12 @@ import { useNavigate } from "react-router-dom";
 export default function AddLost_FoundItem() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate()
+  const [lost ,setLost] = useState('Lost')
+
   const [formData, setFormData] = useState({
     thumbnail: "",
     title: "",
-    type: "Lost",
+    type: "",
     description: "",
     category: "",
     location: "",
@@ -26,13 +28,14 @@ export default function AddLost_FoundItem() {
     setFormData({ ...formData, [name]: value });
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     e.target.reset();
     const from = e.target;
     const thumbnail = from.thumbnail.value;
     const title = from.title.value;
-    const type = from.type.value;
+    const type =lost;
     const description = from.description.value;
     const category = from.category.value;
     const location = from.location.value;
@@ -52,12 +55,13 @@ export default function AddLost_FoundItem() {
       }
      
     };
-
+// console.log(addInfo)
     axios.post(`${import.meta.env.VITE_API_URL}/addItems`,addInfo, {
      
     })
       .then((res) => {
-        // console.log('Data received:', res.data);
+        // console.log(res)
+        // console.log('Data received:', res);
         if (res.data.insertedId) {
           Swal.fire({
             title: "Success!",
@@ -125,8 +129,8 @@ export default function AddLost_FoundItem() {
           <label className="text-left flex justify-start text-gray-700 font-bold mb-2">Post Type</label>
           <select
             name="type"
-            value={formData.type}
-            onChange={handleChange}
+            value={lost}
+            onChange={e=>setLost(e.target.value) }
             required
             className="w-full px-3 py-2 border rounded"
           >
