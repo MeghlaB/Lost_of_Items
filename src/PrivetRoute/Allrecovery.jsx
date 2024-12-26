@@ -20,6 +20,7 @@ export default function AllRecoveries() {
         axiosSecure
             .get(`/allrecoveries?email=${user?.email}`)
             .then((response) => {
+                console.log(response.data)
                 setRecoveriesPost(response.data);
                 setLoading(false);
             })
@@ -98,7 +99,6 @@ export default function AllRecoveries() {
                         <thead className="bg-gray-100">
                             <tr>
                                 <th className="px-6 py-3 text-left text-[16px] font-medium text-gray-700 border-b">Title</th>
-                                <th className="px-6 py-3 text-left text-[16px] font-medium text-gray-700 border-b">Type</th>
                                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Category</th>
                                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Recovered Location</th>
                                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 border-b">Recovered Date</th>
@@ -108,7 +108,6 @@ export default function AllRecoveries() {
                             {recoveriesPost.map(item => (
                                 <tr key={item._id} className="hover:bg-gray-50">
                                     <td className="px-6 py-4 text-sm font-medium text-gray-900 border-b">{item.title}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.type}</td>
                                     <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.category}</td>
                                     <td className="px-6 py-4 text-sm text-gray-700 border-b">{item.recoverLocation}</td>
                                     <td className="px-6 py-4 text-sm text-gray-700 border-b">{new Date(item.recoveryDate).toLocaleDateString()}</td>

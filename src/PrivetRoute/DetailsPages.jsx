@@ -43,6 +43,7 @@ export default function DetailsPages() {
     const recoveryData = {
       recoverLocation,
       recoveryDate: formattedDate,
+      type:item.type,
       title: item.title,
       category: item.category,
       recoverBy: {
