@@ -10,9 +10,9 @@ export default function Banner() {
   const [currentSlider, setCurrentSlider] = useState(0);
   const carouselImages = [
     { image:image1, title: "Lost & Found Central", description: "Your hub for finding lost items and sharing found treasures. Together, we make recovery simple!" },
-    { image: image2, title: "Reconnect with What’s Lost", description: "Turn chances into reality. Find your lost belongings or return found items effortlessly. Let’s bridge the gap between lost and found!." },
-    { image: image3, title: "Lost & Found Alliance", description: "Be the change. Share found items or locate your missing ones. Empowering communities to recover with purpose and ease." },
-    { image: image4, title: "Treasure Recovery Zone", description: "Lost something special? Found something valuable? We make it easy to reunite people with their cherished possessions." }
+    { image: image2, title: "Reconnect with What’s Lost", description: "Turn chances into reality. ." },
+    { image: image3, title: "Lost & Found Alliance", description: "Be the change. Share found items or locate your missing ones." },
+    { image: image4, title: "Treasure Recovery Zone", description: "Lost something special? Found something valuable? ." }
   ];
 
   const prevSlider = () => setCurrentSlider((currentSlider) => currentSlider === 0 ? carouselImages.length - 1 : currentSlider - 1);
