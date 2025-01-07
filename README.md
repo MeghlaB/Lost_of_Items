@@ -1,4 +1,4 @@
-#1.**Assignment Category:**  **11**🌟🌟
+#1.**Project Name:**  **Lost OF Items**🌟🌟
 
 #2.**Live-Link=>** https://assingment11lostfound.web.app
 
@@ -21,19 +21,61 @@
 ---
 
 #5. **Technology used =>**
+---
 
-⁕**React.js**: For building dynamic and interactive user interfaces.
+### Frontend:
+- **React.js** 
+- **Tailwind CSS** 
+- **daisyUI** 
+- **React-tooltip** 
+- **React-simple-typewriter** 
+- **React Awesome Reveal**
 
-⁕ **Tailwind CSS**: For creating a responsive, mobile-first design.
 
-⁕ **React Router**: To handle routing and navigation within the app.
+### Backend:
+- **Node.js**
+- **Express.js** 
+- **MongoDB** 
 
-⁕  **JWT Authentication**: For secure user login and authorization.
+### Authentication:
+- **Firebase Authentication** - Secure and easy authentication system for user login
+-  **JWT Authentication** - For secure user login and authorization.
 
-***SweetAlert**: For displaying alerts and notifications throughout the app.
+---
+### Frontend Dependencies:
+- `react`
+- `react-router-dom`
+- `tailwindcss`
+- `firebase`
+- `recharts`
+- `daisyui`
+- `react-tooltip`
+- `react-simple-typewriter`
+- `react-awesome-reveal`
+- `axios`
+- `react-datepicker`
+- `framer-motion`
 
-#6. **Deployment**
+ ### Backend Dependencies:
+- `express`
+- `mongodb`
+- `cookie-parser`
+- `jsonwebtoken`
+- `cors`
 
-⁕ Vercel
+  ---
 
-⁕ firebase
+
+### 1. Clone the repository:
+```bash
+git clone <https://github.com/MeghlaB/Lost_of_Items>
+cd <Lost_of_Itema>
+```
+###2.Install dependencies:
+npm install
+
+###3. Run the frontend
+npm run dev
+
+ 
+
