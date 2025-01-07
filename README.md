@@ -4,6 +4,8 @@
 
 #3.**Description =>**  WhereIsIt is a platform designed to connect individuals who have lost personal belongings with those who have found them. Users can report lost items, browse found items, and interact to recover their belongings. This project helps foster a community-driven solution to lost and found problems.
 
+----
+
 #4. **key features of my project =>**
 
 ⁕ Dynamic Campaign Management 
@@ -16,6 +18,7 @@
 
 ⁕ Interactive UI
 
+---
 
 #5. **Technology used =>**
 
