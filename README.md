@@ -72,9 +72,11 @@ git clone <https://github.com/MeghlaB/Lost_of_Items>
 cd <Lost_of_Itema>
 ```
 ###2.Install dependencies:
+
 npm install
 
 ###3. Run the frontend
+
 npm run dev
 
  
