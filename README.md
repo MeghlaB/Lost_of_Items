@@ -65,19 +65,22 @@
 
   ---
 
+### Getting Started
+---
+To run this project on your local machine, follow these steps:
 
 ### 1. Clone the repository:
-```bash
-git clone <https://github.com/MeghlaB/Lost_of_Items>
-cd <Lost_of_Itema>
+```bash or terminals
+git clone https://github.com/MeghlaB/Lost_of_Items.git
+cd Lost_of_Items
 ```
-###2.Install dependencies:
+### 2.Install dependencies:
 
 npm install
 
-###3. Run the frontend
+### 3. Run the frontend
 
-npm run dev
+npm run dev or npm start
 
  
 
