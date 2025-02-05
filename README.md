@@ -1,8 +1,8 @@
 #1.**Project Name:**  **Lost OF Items**🌟🌟
 <p align="center">
-  <img src="![Uploading image.png…]()
-" alt="Project Preview" width="600" />
+  <img src="assets/Capture.PNG" alt="Project Preview" width="600" />
 </p>
+
 
 #2.**Live-Link=>** https://assingment11lostfound.web.app
 
@@ -85,6 +85,5 @@ npm install
 ### 3. Run the frontend
 
 npm run dev or npm start
-
  
 
